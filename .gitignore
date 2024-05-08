@@ -1,0 +1,28 @@
+# Compiled output
+dist
+tmp
+out-tsc
+bazel-out
+
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Angular/React/Vue/Ionic
+.angular
+.awcache
+.ionic
+.sourcemaps
+.sass-cache
+.webpack
+
+# Misc
+.DS_Store
+Thumbs.db
+*.log
+*.env*
+
+# Editor
+.vscode
+.idea

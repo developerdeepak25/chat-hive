@@ -1,0 +1,20 @@
+.input-overrides {
+  /* border: 2px solid var(--main) !important; */
+  border-width: 1px;
+  border-radius: 5px;
+  /* outline: none; */
+  /* outline-color: var(--main); */
+  border-color: #707070 !important;
+}
+.input-overrides:focus-visible {
+  border-color: var(--main) !important;
+  border-width: 2px;
+}
+.search_bar_custom{
+    background-color: var(--selected);
+}
+.search_bar_custom::placeholder  {
+    color: var(--icon) !important;
+    /* color: red ; */
+    font-weight: 500 !important;
+}   

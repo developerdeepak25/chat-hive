@@ -1,0 +1,39 @@
+.border_r_stroke {
+  border-right: 1px solid var(--stroke);
+}
+.border_l_stroke {
+  border-left: 1px solid var(--stroke);
+}
+.border_b_stroke {
+  border-bottom: 1px solid var(--stroke);
+}
+.border_t_stroke {
+  border-top: 1px solid var(--stroke);
+}
+
+.bg_main {
+  background-color: var(--main);
+}
+
+.active .selected_bg_color_on_active {
+  background-color: var(--selected);
+}
+
+.selected_bg_color {
+  background-color: var(--selected);
+}
+
+.bg_dark {
+  background-color: #0d0d0d;
+}
+
+.text_color_icon {
+  color: var(--icon);
+}
+
+.incoming_msg_bg{
+    background-color: var(--incoming-msg-bg);
+}
+.msg_bg{
+    background-color: var(--msg-bg);
+}

@@ -1,0 +1,14 @@
+
+.button-overrides {
+  outline: none !important;
+  border: none !important;
+  border: 5px;
+  /* background-color: var(--main) !important; */
+}
+.button-overrides:hover {
+  /* outline: none !important; */
+  /* background-color: var(--main-lite) !important; */
+}
+.button-override-bg{
+  background-color: var(--main) !important;
+}

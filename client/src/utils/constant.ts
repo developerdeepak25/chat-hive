@@ -1,0 +1,1 @@
+export const NavIconColor: string = "#767777";

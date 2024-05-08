@@ -1,0 +1,13 @@
+.navlink_content_wrap {
+    background-color: transparent;
+    /* background-color: var(--selected); */
+    padding: 10px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.active  .navlink_content_wrap{
+      background-color: var(--selected);
+
+}

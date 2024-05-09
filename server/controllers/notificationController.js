@@ -27,6 +27,7 @@ const getNotification = asyncHandler(async (req, res) => {
       { recipientId: userId, isRead: false, type: { $ne: "reqReceived" } },
       { $set: { isRead: true, expiresAt:  expirationTime  } }
     );
+    
     // Find all notifications for the user
     const notifications = await Notification.find({ recipientId: userId })
       .populate("senderId", "username profilePicture")

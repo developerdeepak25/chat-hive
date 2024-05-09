@@ -25,22 +25,40 @@ const notificationSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+// index: function () {
+//         if (this.type === "reqReceived") {
+//           console.log(" not adding expirey");
+//           return { expires: null };
+//         } else {
+//           console.log("adding expirey");
+//           return { expires: "5m" }; // Set the TTL index to expire after 5 minutes
+//         }
+//       },
 
 // used claude ai here  to create this pre hook
-notificationSchema.pre(["save", "updateOne"], function (next) {
-  const notification = this;
+// notificationSchema.post( ["save",'update'], function (doc,next) {
+//   const notification = doc;
+//   console.log("nnn", notification);
 
-  // If the notification is unread and not of type 'reqFriend', set the expiresAt field
-  if (!notification.isRead && notification.type !== "reqReceived") {
-    // notification.expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes in milliseconds
-    notification.expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes in milliseconds
-  } else {
-    // If the notification is read or of type 'reqFriend', remove the expiresAt field to prevent expiration
-    notification.expiresAt = undefined;
-  }
+//   // If the notification is unread and not of type 'reqFriend', set the expiresAt field
+//   console.log(
+//     "setting  expiry outside",
+//     notification.isRead,
+//     notification.type
+//   );
 
-  next();
-});
+//   if (!notification.isRead || notification.type !== "reqReceived") {
+//     // notification.expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes in milliseconds
+//     notification.expiresAt = undefined;
+//     console.log("not setting expiry ");
+//   } else {
+//     console.log("setting  expiry");
+//     notification.expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes in milliseconds
+//     // If the notification is read or of type 'reqFriend', remove the expiresAt field to prevent expiration
+//   }
+
+// next();
+// });
 notificationSchema.post("save", async function (doc, next) {
   try {
     const User = mongoose.model("User");

@@ -15,7 +15,18 @@ const {
 const getNotification = asyncHandler(async (req, res) => {
   const userId = req.user.userId;
 
+  const expirationTime = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes in milliseconds
+
   try {
+   
+    await Notification.updateMany(
+      { recipientId: userId, isRead: false, type: "reqReceived" },
+      { $set: { isRead: true, expiresAt: undefined  }}
+    );
+    await Notification.updateMany(
+      { recipientId: userId, isRead: false, type: { $ne: "reqReceived" } },
+      { $set: { isRead: true, expiresAt:  expirationTime  } }
+    );
     // Find all notifications for the user
     const notifications = await Notification.find({ recipientId: userId })
       .populate("senderId", "username profilePicture")
@@ -23,11 +34,7 @@ const getNotification = asyncHandler(async (req, res) => {
       .select("_id recipientId senderId type")
       .lean();
 
-    // Did this hoping that user will be isReaded as false for new notifications 
-    await Notification.updateMany(
-      { recipientId: userId, isRead: false },
-      { $set: { isRead: true } }
-    );
+    // Did this hoping that user will be isReaded as false for new notifications
 
     // Remove all elements from the unreadNotifications array in the User document
     await User.updateOne(

@@ -9,7 +9,7 @@ import { errorToastOptions, successsToastOptions } from "@/utils/toastOption";
 import { Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {  signin } from "@/store/slices/authSlice";
+import { signin } from "@/store/slices/authSlice";
 // import { AxiosResponse } from "axios";
 import { ApiResponse, signInResponse } from "@/types/type";
 import { addUnreadNotifications } from "@/store/slices/notificationSlice";
@@ -109,7 +109,7 @@ const GoogleSignIn = () => {
         if (!res) return;
         const { status, data } = res;
         // if (status === undefined || data === undefined) return;
-       
+
         if (status === 200) {
           // if (data) {
           dispatch(signin(data));
@@ -123,14 +123,17 @@ const GoogleSignIn = () => {
         }
       })
       .catch((error) => {
-      const { status,data} = error.response
-         if (status === 400 || status === 401) {
-           // console.log(data.error);
-           return toast.error(data?.error, errorToastOptions);
-         }
+        console.log(error);
+        
+        if (!error.response) return toast.error("Something went Wrong!!", errorToastOptions);
+        const { status, data } = error.response;
+        if (status === 400 || status === 401) {
+          // console.log(data.error);
+          return toast.error(data?.error, errorToastOptions);
+        }
         // Handle Errors here.
         console.error(error);
-      return toast.error("Something went Wrong!!", errorToastOptions);
+        return toast.error("Something went Wrong!!", errorToastOptions);
       })
       .finally(() => {
         setLoading(false);

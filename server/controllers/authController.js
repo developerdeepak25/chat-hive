@@ -8,6 +8,7 @@ const {
   generateAccessToken,
   generateRefreshToken,
 } = require("../utils/JWTUtils");
+const { cookieOptions } = require("../utils/cookie");
 // const { OAuth2Client } = require("google-auth-library");
 
 // sign up controller
@@ -66,13 +67,7 @@ const signinHandler = asyncHandler(async (req, res) => {
   console.log("refresh token when generated", refreshToken);
 
   res
-    .cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      sameSite: "none",
-      // path: "/",
-      secure: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    })
+    .cookie("refreshToken", refreshToken, cookieOptions)
     .status(200)
     .json({
       // Send the access token and user data in the response
@@ -113,12 +108,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   const newRefreshToken = generateRefreshToken(user);
 
   res
-    .cookie("refreshToken", newRefreshToken, {
-      httpOnly: true,
-      sameSite: "strict",
-      path: "/",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    })
+    .cookie("refreshToken", newRefreshToken, cookieOptions)
     .status(200)
     .json({
       _id: user._id,
@@ -153,32 +143,20 @@ const googeleSignInHandler = asyncHandler(async (req, res) => {
   const accessToken = generateAccessToken(user);
   const newRefreshToken = generateRefreshToken(user);
 
-  res
-    .cookie("refreshToken", newRefreshToken, {
-      httpOnly: true,
-      sameSite: "strict",
-      path: "/",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    })
-    .status(200)
-    .json({
-      message: "user signed in successfully",
-      _id: user._id,
-      name: user.username,
-      email: user.email,
-      accessToken,
-      userPic: user.profilePicture,
-      unreadNotifications: user.unreadNotifications,
-    });
+  res.cookie("refreshToken", newRefreshToken, cookieOptions).status(200).json({
+    message: "user signed in successfully",
+    _id: user._id,
+    name: user.username,
+    email: user.email,
+    accessToken,
+    userPic: user.profilePicture,
+    unreadNotifications: user.unreadNotifications,
+  });
 });
 
 const signoutHandler = asyncHandler(async (req, res) => {
   // Clear the refresh token cookie
-  res.clearCookie("refreshToken", {
-    httpOnly: true,
-    sameSite: "strict",
-    path: "/",
-  });
+  res.clearCookie("refreshToken", cookieOptions);
 
   res.status(200).json({ message: "User logged out successfully" });
 });

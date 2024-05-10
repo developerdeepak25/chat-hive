@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema(
     // Other user-related fields
     googleId: {
       type: String,
-      unique: true,
+      // unique: true,
       // default: null,
     },
     unreadNotifications: [

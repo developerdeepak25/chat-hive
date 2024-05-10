@@ -27,7 +27,7 @@ function App() {
     <>
       <Routes>
         <Route element={<PersistSignIn />}>
-          <Route
+          <Route  
             path="/auth"
             element={
               <PublicRoute>

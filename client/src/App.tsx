@@ -14,6 +14,7 @@ import SingleChat from "./pages/home/nested/SingleChat";
 import PrivateRoute from "./components/Auth/PrivateRoute";
 import PublicRoute from "./components/Auth/PublicRoute";
 import PersistSignIn from "./components/Auth/PersistSignIn";
+import FillerComponent from "./components/Shared/FillerComponent/FillerComponent";
 
 function App() {
   useEffect(() => {
@@ -51,11 +52,7 @@ function App() {
               <Route
                 index
                 element={
-                  <div className=" h-full grow flex flex-col items-center justify-center">
-                    <h2 className=" text-lg text-center">
-                      Select a chat to start chatting
-                    </h2>
-                  </div>
+                  <FillerComponent/>
                 }
               />
             </Route>
@@ -64,11 +61,7 @@ function App() {
               <Route
                 index
                 element={
-                  <div className=" h-full grow flex flex-col items-center justify-center">
-                    <h2 className="text-lg text-center">
-                      Select a chat to start chatting
-                    </h2>
-                  </div>
+                  <FillerComponent/>
                 }
               />
             </Route>

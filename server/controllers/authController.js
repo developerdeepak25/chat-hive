@@ -65,22 +65,26 @@ const signinHandler = asyncHandler(async (req, res) => {
   const refreshToken = generateRefreshToken(user);
   console.log("refresh token when generated", refreshToken);
 
-  res.cookie("refreshToken", refreshToken, {
-    httpOnly: true,
-    sameSite: "strict",
-    path: "/",
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-  }).status(200).json({
-    // Send the access token and user data in the response
-    message: "user signed in successfully",
-    _id: user._id,
-    name: user.username,
-    email: user.email,
-    accessToken,
-    unreadNotifications: user.unreadNotifications,
-    // userPic: user.profilePicture,
-    ...(user.profilePicture && { userPic: user.profilePicture }), // Only include userPic if it exists
-  });
+  res
+    .cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      sameSite: "strict",
+      path: "/",
+      secure: "true",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    })
+    .status(200)
+    .json({
+      // Send the access token and user data in the response
+      message: "user signed in successfully",
+      _id: user._id,
+      name: user.username,
+      email: user.email,
+      accessToken,
+      unreadNotifications: user.unreadNotifications,
+      // userPic: user.profilePicture,
+      ...(user.profilePicture && { userPic: user.profilePicture }), // Only include userPic if it exists
+    });
 });
 
 //  refresh access token controller
@@ -89,13 +93,15 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   const { refreshToken } = req.cookies;
   // console.log('refreshToken',refreshToken);
   if (!refreshToken) {
-   return res.status(401).json({ message: "Unauthorized, no refresh token" });
+    return res.status(401).json({ message: "Unauthorized, no refresh token" });
   }
   let payload;
   try {
     payload = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
   } catch (error) {
-    return res.status(403).json({ message: "Forbidden, invalid refresh token" });
+    return res
+      .status(403)
+      .json({ message: "Forbidden, invalid refresh token" });
   }
   const user = await User.findById(payload.userId);
 
@@ -176,7 +182,6 @@ const signoutHandler = asyncHandler(async (req, res) => {
 
   res.status(200).json({ message: "User logged out successfully" });
 });
-
 
 // const googeleSignInHandler = asyncHandler(async (req, res) => {
 //   const { id_token, access_token } = req.body;

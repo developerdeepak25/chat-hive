@@ -109,7 +109,7 @@ const SingleChat = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    const liveChathandler = (message) => {
+    const liveChathandler = (message:MessageType) => {
       console.log(`newMessage is emited for me`);
       if (!selectedChat) return;
       if (message.chatId._id !== selectedChat._id) return;

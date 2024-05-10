@@ -91,6 +91,7 @@ const getMessages = asyncHandler(async (req, res) => {
     "username profilePicture"
   );
 
+  // removing all messages gfrom un read msg except for current user messages
   console.log("chat.unreadMessages", chat.unreadMessages);
   const unreadMessages = chat?.unreadMessages.filter(
     (unreadMessage) => unreadMessage.senderId.toString() === userId.toString()

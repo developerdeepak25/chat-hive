@@ -55,9 +55,17 @@ export type NotificationType = {
 
 export type MessageType = {
   _id: string;
-  chatId:  ChatTypes | string;
+  chatId:  ChatTypes ;
   senderId: userDataTypes;
   content: string;
   type: "text" | "media";
   createdAt: string;
 };
+// export type UnreadMessageType = {
+//   _id: string;
+//   chatId:  string ;
+//   senderId: string;
+//   content: string;
+//   type: "text" | "media";
+//   createdAt: string;
+// };

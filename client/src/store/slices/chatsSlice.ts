@@ -55,6 +55,7 @@ export const chatsSlice = createSlice({
     },
     updateChatUnreadedMessage: (state, action: PayloadAction<MessageType>) => {
       const message = action.payload;
+      if (typeof message.chatId === "string" ) return;
       const index = state.chats.findIndex(
         (chat) => chat._id === message.chatId._id
       );
@@ -75,9 +76,9 @@ export const chatsSlice = createSlice({
       );
       state.chats[index].latestMessage = message;
     },
-    resetChats:()=>{
-      return initialState
-    }
+    resetChats: () => {
+      return initialState;
+    },
     // Other reducers for updating, removing, or clearing chats...
   },
 });

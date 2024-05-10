@@ -6,7 +6,7 @@ import { formatTimestampForDisplay } from "@/utils/formatTimestampForDisplay";
 import { useAppSelector } from "@/store/hooks";
 
 const ResultChat: React.FC<{ chat: ChatTypes }> = ({ chat }) => {
-  const { username, profilePicture: pic } = chat?.chatPartner;
+  const { username, profilePicture: pic } = chat.chatPartner;
   const { createdAt, content } = chat?.latestMessage ?? {};
   const {userId } = useAppSelector((state)=>{
     return state.Auth;
@@ -16,7 +16,7 @@ const ResultChat: React.FC<{ chat: ChatTypes }> = ({ chat }) => {
   //   const createdAt = "2024-04-16T15:47:26.915+00:00";
   // const createdAt = "2024-04-24T09:24:28.565Z";
   const createDateFormated = formatTimestampForDisplay(createdAt);
-  const unreadMessageCount = chat.unreadMessages.filter(unreadMessage => unreadMessage.senderId !== userId ).length
+  const unreadMessageCount = chat.unreadMessages.filter(unreadMessage => unreadMessage.senderId._id !== userId ).length
   console.log(`unreadMessageCount`, unreadMessageCount);
 
   useEffect(() => {

@@ -36,7 +36,7 @@ const SignUp = () => {
         toast.success("Signed up successfully", successsToastOptions);
         navigate("/auth/signin");
       }
-    } catch (error) {
+    } catch (error:any) {
       const { status, data } = error.response;
 
       console.log(error);

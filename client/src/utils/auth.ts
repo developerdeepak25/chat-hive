@@ -20,11 +20,10 @@ export const refreshAccessToken = async () => {
     ] = `Bearer ${newAccessToken}`;
 
     return newAccessToken;
-  } catch (error) {
+  } catch (error:any) {
     // Handle error refreshing access token
     console.log("Error refreshing access token:", error);
-
-    // Optionally, you can log the user out if the refresh token is invalid or expired
+    if (!error.respoonse)return
     if (error.response.status === 401 || error.response.status === 403) {
       console.log("dispatching logout");
 

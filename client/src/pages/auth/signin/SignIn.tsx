@@ -67,7 +67,7 @@ const SignIn = () => {
 
         navigate("/");
       }
-    } catch (error) {
+    } catch (error:any) {
       const { status, data } = error.response;
 
       console.log("inside catch", error);

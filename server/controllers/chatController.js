@@ -10,7 +10,19 @@ const getAllChats = asyncHandler(async (req, res) => {
   })
     .populate("participants", "username profilePicture")
     .populate("latestMessage")
-    .populate('unreadMessages')
+    .populate({
+      path: "unreadMessages",
+      populate: [
+        {
+          path: "senderId",
+          select: "username profilePicture",
+        },
+        {
+          path: "chatId",
+          select: "participants",
+        },
+      ],
+    })
     .sort("-updatedAt")
     .lean();
 

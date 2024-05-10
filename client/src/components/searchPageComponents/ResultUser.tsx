@@ -58,10 +58,10 @@ const ResultUser = ({ user }: resultUserType) => {
       // if (res?.status === 400) {
       //   toast.error(res.data.message, errorToastOptions);
       // }
-    } catch (err) {
+    } catch (err:any) {
       console.log(err);
-
-      if (err?.response?.status === 400) {
+      if (!err.response) return;
+      if (err.response.status === 400) {
         return toast.error(err.response.data.message, errorToastOptions);
       }
       toast.error("Something Went Wrong!!", errorToastOptions);

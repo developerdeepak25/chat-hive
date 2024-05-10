@@ -9,7 +9,7 @@ import {
   updateChatLatestMessage,
   updateChatUnreadedMessage,
 } from "@/store/slices/chatsSlice";
-import { ChatTypes } from "@/types/type";
+import { ChatTypes, MessageType } from "@/types/type";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -49,7 +49,7 @@ const ChatPage = () => {
   //   console.log(data);
   // }, [data]);
   useEffect(() => {
-    const newMessageHandler = (message) => {
+    const newMessageHandler = (message:MessageType) => {
       console.log("i am running inside emit", message.chatId._id);
       dispatch(updateChatLatestMessage(message));
       if (selectedChat === null) {

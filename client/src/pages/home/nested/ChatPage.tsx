@@ -1,6 +1,7 @@
 import { apiAxios } from "@/AxiosInstance/AxiosInstance";
 import socket from "@/Socket";
 import ResultChat from "@/components/ChatpageComponents/ResultChat";
+import SideColumnWrapper from "@/components/Shared/SideColumnWrapper/SideColumnWrapper";
 import UsersScrobleContainer from "@/components/Shared/UsersScrobleContainer/UsersScrobleContainer";
 import SearchBar from "@/components/input/SearchBar";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -37,7 +38,6 @@ const ChatPage = () => {
 
       dispatch(setChats(data?.data));
     }
-   
   }, [data, dispatch, isSuccess]);
 
   const filteredChats = chats?.filter((chat: ChatTypes) =>
@@ -49,7 +49,7 @@ const ChatPage = () => {
   //   console.log(data);
   // }, [data]);
   useEffect(() => {
-    const newMessageHandler = (message:MessageType) => {
+    const newMessageHandler = (message: MessageType) => {
       console.log("i am running inside emit", message.chatId._id);
       dispatch(updateChatLatestMessage(message));
       if (selectedChat === null) {
@@ -58,7 +58,6 @@ const ChatPage = () => {
         return;
       }
       if (message.chatId._id !== selectedChat._id) {
-        
         console.log("chat selected but not same");
         dispatch(updateChatUnreadedMessage(message));
       }
@@ -78,45 +77,40 @@ const ChatPage = () => {
 
   return (
     <>
-      <div className="w-[400px] h-full grid overflow-y-hidden border_r_stroke">
-        <div className="w-full h-full flex flex-col  gap-7 overflow-y-auto">
-          <div className="flex flex-col gap-7">
-            <div className="w-full  mt-6 px-4 ">
-              <SearchBar
-                onChange={(e) => {
-                  setSearchTerm(e.target.value);
-                }}
-                placeholder="Search"
-              />
-            </div>
-            <h2 className=" text-2xl font-medium px-4">Chats</h2>
+      <SideColumnWrapper>
+        <div className="flex flex-col gap-7">
+          <div className="w-full  mt-6 px-4 ">
+            <SearchBar
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+              placeholder="Search"
+            />
           </div>
-          <UsersScrobleContainer>
-            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
-            {isError && (
-              <p className="pt-5 text-center">No Chats present yet</p>
-            )}
-            {isSuccess &&
-              data?.status === 200 &&
-              (filteredChats.length !== 0 ? (
-                filteredChats.map((chat: ChatTypes) => {
-                  return (
-                    <NavLink key={chat._id} to={`/chats/${chat._id}`}>
-                      <ResultChat chat={chat} />
-                    </NavLink>
-                  );
-                })
-              ) : (
-                <p className="pt-5 text-center">No Chats Found</p>
-              ))}
-          </UsersScrobleContainer>
+          <h2 className=" text-2xl font-medium px-4">Chats</h2>
         </div>
-      </div>
-      <div className="  h-full grow flex flex-col items-center justify-center ">
+        <UsersScrobleContainer>
+          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+          {isError && <p className="pt-5 text-center">No Chats present yet</p>}
+          {isSuccess &&
+            data?.status === 200 &&
+            (filteredChats.length !== 0 ? (
+              filteredChats.map((chat: ChatTypes) => {
+                return (
+                  <NavLink key={chat._id} to={`/chats/${chat._id}`}>
+                    <ResultChat chat={chat} />
+                  </NavLink>
+                );
+              })
+            ) : (
+              <p className="pt-5 text-center">No Chats Found</p>
+            ))}
+        </UsersScrobleContainer>
+      </SideColumnWrapper>
         {/* <h1>i am empty but not shared</h1> */}
         {/* <h2 className=" text-lg">Select a chat to start chatting</h2> */}
         <Outlet />
-      </div>
+      
     </>
   );
 };

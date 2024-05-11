@@ -127,50 +127,52 @@ const SingleChat = () => {
 
   return (
     <>
-      <div className=" h-full flex flex-col w-full">
-        <div className=" py-5 border_b_stroke flex px-6 items-center gap-3">
-          <Profile src={profilePicture} />
-          <h3 className=" text-lg">{username}</h3>
-        </div>
-        <div className="message-feed grow  bg_dark overflow-y-hidden flex flex-col max-h-full items-center justify-center">
-          {/* <div className=" overflow-y-auto"> */}
-          {isLoading && <Loader2 className="h-10 w-10 animate-spin" />}
-          {isError && (
-            <p className="pt-5 text-center">messages can't be loaded</p>
-          )}
-          {isSuccess &&
-            data.status === 200 &&
-            (messages?.length !== 0 ? (
-              <div className="flex  flex-col  justify-end h-full w-full ">
-                <Messagefeed
-                  messages={messages}
-                  bottomDivRef={scrollBottomRef}
-                />
-              </div>
-            ) : (
-              <p className="pt-5 text-center">No Messages yet</p>
-            ))}
-          {/* </div> */}
-        </div>
-
-        <div className="message-input-container p-6 border_t_stroke ">
-          <div className="flex gap-3">
-            <MessageTextArea
-              className=" rounded-2xl resize-none py-3 outline-none px-5 selected_bg_color  font-medium grow block"
-              onChange={(e) => setTypedMessage(e.target.value)}
-              value={typedMessage}
-            />
-            <Button
-              className="p-[14px] rounded-2xl h-12 flex item-center justify-center flex-col aspect-square  "
-              onClick={() => mutate()}
-              variant="myMain"
-            >
-              {isPending ? (
-                <Loader2 className="h-10 w-10 animate-spin" />
+      <div className="  h-full grow flex flex-col items-center justify-center max-sm:w-full max-sm:z-50  max-sm:absolute top-0 ">
+        <div className=" h-full flex flex-col w-full bg_primary">
+          <div className=" py-5 border_b_stroke flex px-6 items-center gap-3 ">
+            <Profile src={profilePicture} />
+            <h3 className=" text-lg">{username}</h3>
+          </div>
+          <div className="message-feed grow  bg_dark overflow-y-hidden flex flex-col max-h-full items-center justify-center">
+            {/* <div className=" overflow-y-auto"> */}
+            {isLoading && <Loader2 className="h-10 w-10 animate-spin" />}
+            {isError && (
+              <p className="pt-5 text-center">messages can't be loaded</p>
+            )}
+            {isSuccess &&
+              data.status === 200 &&
+              (messages?.length !== 0 ? (
+                <div className="flex  flex-col  justify-end h-full w-full ">
+                  <Messagefeed
+                    messages={messages}
+                    bottomDivRef={scrollBottomRef}
+                  />
+                </div>
               ) : (
-                <SendIcon />
-              )}
-            </Button>
+                <p className="pt-5 text-center">No Messages yet</p>
+              ))}
+            {/* </div> */}
+          </div>
+
+          <div className="message-input-container p-6 border_t_stroke ">
+            <div className="flex gap-3">
+              <MessageTextArea
+                className=" rounded-2xl resize-none py-3 outline-none px-5 selected_bg_color  font-medium grow block"
+                onChange={(e) => setTypedMessage(e.target.value)}
+                value={typedMessage}
+              />
+              <Button
+                className="p-[14px] rounded-2xl h-12 flex item-center justify-center flex-col aspect-square  "
+                onClick={() => mutate()}
+                variant="myMain"
+              >
+                {isPending ? (
+                  <Loader2 className="h-10 w-10 animate-spin" />
+                ) : (
+                  <SendIcon />
+                )}
+              </Button>
+            </div>
           </div>
         </div>
       </div>

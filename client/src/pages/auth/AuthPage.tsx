@@ -8,7 +8,7 @@ const AuthPage = () => {
   useEffect(() => {}, []);
   return (
     <>
-      <div className="auth_Wrapper flex items-center justify-center w-full min-h-full">
+      <div className="auth_Wrapper flex items-center justify-center w-full h-dvh">
         <Outlet />
       </div>
     </>

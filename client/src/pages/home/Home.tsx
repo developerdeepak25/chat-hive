@@ -1,5 +1,5 @@
 import socket from "@/Socket";
-import SideNavbar from "@/components/navbar/SideNavbar";
+import Navbar from "@/components/navbar/Navbar";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addUnreadNotifications } from "@/store/slices/notificationSlice";
 import { playSound } from "@/utils/functions";
@@ -38,10 +38,9 @@ const Home = () => {
 
   return (
     <>
-      <div className="w-full h-full overflow-hidden flex ">
-        <div className=" w-20  h-full border_r_stroke">
-          <SideNavbar />
-        </div>
+      <div className="w-full  overflow-hidden flex relative h-full ">
+        <Navbar />
+
         <Outlet />
       </div>
     </>

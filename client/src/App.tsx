@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 // import reactLogo from "./assets/react.svg";
 // import viteLogo from "/vite.svg";
 // import { io } from "socket.io-client";
@@ -15,21 +14,25 @@ import PrivateRoute from "./components/Auth/PrivateRoute";
 import PublicRoute from "./components/Auth/PublicRoute";
 import PersistSignIn from "./components/Auth/PersistSignIn";
 import FillerComponent from "./components/Shared/FillerComponent/FillerComponent";
+import { ToastContainer } from "react-toastify";
+import useMobileView from "./Hooks/useMobileView";
 
 function App() {
-  useEffect(() => {
-    // const socket = io("http://localhost:5000");
-    // return () => {
-    //   socket.disconnect();
-    // };
-  }, []);
+  // useEffect(() => {
+  // const socket = io("http://localhost:5000");
+  // return () => {
+  //   socket.disconnect();
+  // };
+  // }, []);
+  const ismobile = useMobileView();
 
   return (
     <>
       <Routes>
         <Route element={<PersistSignIn />}>
-          <Route  
+          <Route
             path="/auth"
+            // element={<AuthPage />}
             element={
               <PublicRoute>
                 <AuthPage />
@@ -42,6 +45,7 @@ function App() {
           </Route>
           <Route
             path="/"
+            // element={<Home />}
             element={
               <PrivateRoute>
                 <Home />
@@ -49,27 +53,18 @@ function App() {
             }
           >
             <Route path="/" element={<ChatPage />}>
-              <Route
-                index
-                element={
-                  <FillerComponent/>
-                }
-              />
+              <Route index element={<FillerComponent />} />
             </Route>
             <Route path="chats" element={<ChatPage />}>
               <Route path=":id" element={<SingleChat />} />
-              <Route
-                index
-                element={
-                  <FillerComponent/>
-                }
-              />
+              <Route index element={<FillerComponent />} />
             </Route>
             <Route path="search" element={<SearchPage />} />
             <Route path="notification" element={<NotificationPage />} />
           </Route>
         </Route>
       </Routes>
+      <ToastContainer position={ismobile ? "top-center" : "bottom-right"}  pauseOnFocusLoss={false} pauseOnHover={false}/>
     </>
   );
 }

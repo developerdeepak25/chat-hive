@@ -37,3 +37,23 @@
 .msg_bg{
     background-color: var(--msg-bg);
 }
+.bg_primary{
+background-color: var(--bg-primary);
+}
+.navbar_height{
+  height: 80px;
+}
+
+.chat_height{
+  height: 100%;
+}
+
+@media not all and (min-width: 640px) {
+  .border_r_stroke {
+    border-right:none;
+  }
+  .chat_height{
+    height: calc(100% - 80px);
+  }
+}
+

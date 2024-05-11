@@ -6,7 +6,7 @@ var cookieParser = require("cookie-parser");
 const app = express();
 
 var corsOptions = {
-  origin: process.env.CLIENT_URL, // temp added http://192.168.150.40 to test on network/mobile
+  origin: [process.env.CLIENT_URL, "http://192.168.150.40:5173"], // temp added http://192.168.150.40 to test on network/mobile
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };

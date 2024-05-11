@@ -1,5 +1,6 @@
 import { apiAxios } from "@/AxiosInstance/AxiosInstance";
 import ChatPlaceHolder from "@/components/Shared/ChatplaceHolder/ChatPlaceHolder";
+import SideColumnWrapper from "@/components/Shared/SideColumnWrapper/SideColumnWrapper";
 import UsersScrobleContainer from "@/components/Shared/UsersScrobleContainer/UsersScrobleContainer";
 import SearchBar from "@/components/input/SearchBar";
 import ResultUser from "@/components/searchPageComponents/ResultUser";
@@ -39,33 +40,32 @@ const SearchPage = () => {
 
   return (
     <>
-      <div className="w-[400px] h-full grid  border_r_stroke overflow-y-hidden">
-        <div className="w-full h-full flex flex-col  gap-7 overflow-y-auto">
-          <div className="flex flex-col gap-7">
-            <div className="w-full  mt-6 px-4 ">
-              <SearchBar
-                onChange={(e) => {
-                  setQuery(e.target.value);
-                }}
-                placeholder="Discover peoples"
-              />
-            </div>
-            <h2 className=" text-2xl font-medium px-4">Results</h2>
+      <SideColumnWrapper>
+        <div className="flex flex-col gap-7">
+          <div className="w-full  mt-6 px-4 ">
+            <SearchBar
+              onChange={(e) => {
+                setQuery(e.target.value);
+              }}
+              placeholder="Discover peoples"
+            />
           </div>
-          {/* <div className="flex flex-col border_t_stoke overflow-y-hidden">
-            <div className=" overflow-y-auto "> */}
-          <UsersScrobleContainer>
-            {result?.length === 0 && (
-              <div className="pt-5 text-center">No Match Found</div>
-            )}
-            {result ? (
-              result?.map((user) => <ResultUser user={user} key={user._id} />)
-            ) : (
-              <p className="pt-5 text-center">No Searches</p>
-            )}
-          </UsersScrobleContainer>
+          <h2 className=" text-2xl font-medium px-4">Results</h2>
         </div>
-      </div>
+        {/* <div className="flex flex-col border_t_stoke overflow-y-hidden">
+            <div className=" overflow-y-auto "> */}
+        <UsersScrobleContainer>
+          {result?.length === 0 && (
+            <div className="pt-5 text-center">No Match Found</div>
+          )}
+          {result ? (
+            result?.map((user) => <ResultUser user={user} key={user._id} />)
+          ) : (
+            <p className="pt-5 text-center">No Searches</p>
+          )}
+        </UsersScrobleContainer>
+      </SideColumnWrapper>
+
       <ChatPlaceHolder />
     </>
   );

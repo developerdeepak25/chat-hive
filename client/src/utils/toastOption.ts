@@ -1,7 +1,7 @@
 import { Bounce, ToastOptions } from "react-toastify";
 
 export const errorToastOptions: ToastOptions = {
-  position: "bottom-right",
+  // position: "bottom-right",
   autoClose: 4000,
   hideProgressBar: false,
   closeOnClick: true,
@@ -10,7 +10,7 @@ export const errorToastOptions: ToastOptions = {
 };
 
 export const successsToastOptions: ToastOptions = {
-  position: "bottom-right",
+  // position: "bottom-right",
   autoClose: 4000,
   hideProgressBar: false,
   closeOnClick: true,

@@ -17,12 +17,12 @@ const Message = ({ message, loggedUserId }: Props) => {
       }`}
     >
       <span
-        className={`flex gap-1 flex-col rounded-xl py-1 px-3 max-w-[70%] ${
+        className={`flex gap-1 flex-col rounded-xl py-1 px-3 max-w-[70%] break-words ${
           sender._id !== loggedUserId ? "incoming_msg_bg" : "msg_bg "
         }`}
       >
         {content}
-        <span className=" text-xs text-gray-400 self-end">
+        <span className=" text-xs text-gray-400 self-end ">
           {formatTimestampForDisplay(createdAt)}
         </span>
       </span>

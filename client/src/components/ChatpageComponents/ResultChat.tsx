@@ -25,23 +25,35 @@ const ResultChat: React.FC<{ chat: ChatTypes }> = ({ chat }) => {
 
   return (
     <>
-      <div className="selected_bg_color_on_active">
+      <div className="selected_bg_color_on_active w-full">
         <PeerUserWrapper>
-          <div className="flex gap-4 items-center">
-            <Profile src={pic} alt="resultuser" h={"40"} />
+          <div className=" w-full flex">
+            <div className="flex gap-4 items-center w-full ">
+              <Profile src={pic} alt="resultuser" h={"40"} />
 
-            <div>
-              <p>{username}</p>
-              {content && <p className=" text-sm text-gray-400 ">{content}</p>}
-            </div>
-          </div>
-          <div className="flex  h-full flex-col items-center gap-1">
-           {createdAt && <p className=" text-xs text-gray-400 ">{createDateFormated}</p>}
-            {!(unreadMessageCount <= 0 || !chat?.unreadMessages) && (
-              <div className=" h-5 aspect-square  bg_main rounded-full flex items-center justify-center">
-                {unreadMessageCount && <p className="text-xs text-gray-300 ">{unreadMessageCount}</p>}
+              <div className="  min-w-0">
+                <p>{username}</p>
+                {content && (
+                  <p className=" text-sm text-gray-400 text-nowrap text-ellipsis min-w-0 overflow-hidden ">
+                    {content}
+                  </p>
+                )}
               </div>
-            )}
+            <div className="flex   flex-col items-center justify-center gap-1 h-full shrink-0" >
+              {createdAt && (
+                <p className=" text-xs text-gray-400   shrink-0">{createDateFormated}</p>
+              )}
+              {!(unreadMessageCount <= 0 || !chat?.unreadMessages) && (
+                <div className=" h-5 aspect-square  bg_main rounded-full flex items-center justify-center">
+                  {unreadMessageCount && (
+                    <p className="text-xs text-gray-300 ">
+                      {unreadMessageCount}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+            </div>
           </div>
         </PeerUserWrapper>
       </div>

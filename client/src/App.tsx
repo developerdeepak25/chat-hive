@@ -32,12 +32,12 @@ function App() {
         <Route element={<PersistSignIn />}>
           <Route
             path="/auth"
-            element={<AuthPage />}
-            // element={
-            //   <PublicRoute>
-            //     <AuthPage />
-            //   </PublicRoute>
-            // }
+            // element={<AuthPage />}
+            element={
+              <PublicRoute>
+                <AuthPage />
+              </PublicRoute>
+            }
           >
             <Route index element={<SignIn />}></Route>
             <Route path="signin" element={<SignIn />}></Route>
@@ -45,12 +45,12 @@ function App() {
           </Route>
           <Route
             path="/"
-            element={<Home />}
-            // element={
-            //   <PrivateRoute>
-            //     <Home />
-            //   </PrivateRoute>
-            // }
+            // element={<Home />}
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
           >
             <Route path="/" element={<ChatPage />}>
               <Route index element={<FillerComponent />} />

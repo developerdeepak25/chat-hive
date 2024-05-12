@@ -127,7 +127,7 @@ const SingleChat = () => {
 
   return (
     <>
-      <div className="  h-full grow flex flex-col items-center justify-center max-sm:w-full max-sm:z-50  max-sm:absolute top-0 bottom-0 bg_primary max-sm:h-full overflow-hidden">
+      <div className="  h-full grow flex flex-col items-center justify-center max-sm:w-full max-sm:z-50  max-sm:absolute top-0 bottom-0 bg_primary  overflow-hidden">
         <div className=" h-full flex flex-col w-full bg_primary ">
           <div className=" py-5 border_b_stroke flex px-6 items-center gap-3 ">
             <Profile src={profilePicture} />

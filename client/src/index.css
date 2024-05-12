@@ -44,16 +44,15 @@
   --toastify-color-success: #07bc0c;
   --toastify-color-warning: #f1c40f;
   --toastify-color-error: #e74c3c; */
-  height: 100vh;
+  /* height: 100vh;
   height: 100dvh;
-  width: 100vw;
-  /* height: --webkit-fill-available; */
+  width: 100vw; */
 }
 
 #root {
-  height: 100vh;
-  height: 100dvh;
-  /* height: inherit; */
+  /* height: 100vh;
+  height: 100dvh; */
+  height: inherit;
   width: 100vw;
 }
 
@@ -62,7 +61,7 @@ body {
   display: flex;
   place-items: center;
   min-width: 100vw;
-  height: 100vh;
+  height: 100dvh;
 }
 
 a {

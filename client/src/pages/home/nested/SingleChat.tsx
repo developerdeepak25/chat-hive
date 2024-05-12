@@ -127,7 +127,7 @@ const SingleChat = () => {
 
   return (
     <>
-      <div className="  h-full grow flex flex-col items-center justify-center max-sm:w-full max-sm:z-50  max-sm:absolute top-0 ">
+      <div className="  h-full grow flex flex-col items-center justify-center max-sm:w-full max-sm:z-50  max-sm:absolute top-0 bottom-0">
         <div className=" h-full flex flex-col w-full bg_primary">
           <div className=" py-5 border_b_stroke flex px-6 items-center gap-3 ">
             <Profile src={profilePicture} />
@@ -154,7 +154,7 @@ const SingleChat = () => {
             {/* </div> */}
           </div>
 
-          <div className="message-input-container p-6 border_t_stroke ">
+          <div className="message-input-container p-6 border_t_stroke  ">
             <div className="flex gap-3">
               <MessageTextArea
                 className=" rounded-2xl resize-none py-3 outline-none px-5 selected_bg_color  font-medium grow block"

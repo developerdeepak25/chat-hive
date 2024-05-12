@@ -50,7 +50,7 @@
   height: 100vh;
   height: 100dvh;
   /* height: inherit; */
-  width: 100%;
+  width: 100vw;
 }
 
 body {

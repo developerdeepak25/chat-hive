@@ -47,9 +47,9 @@
 }
 
 #root {
-  /* height: 100vh;
-  height: 100dvh; */
-  height: inherit;
+  height: 100vh;
+  height: 100dvh;
+  /* height: inherit; */
   width: 100%;
 }
 

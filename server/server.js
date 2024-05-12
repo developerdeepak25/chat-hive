@@ -11,7 +11,6 @@ const server = http.createServer(app);
 // initializing socket io
 const { Server } = require("socket.io");
 const connectDB = require("./configs/dbConfig");
-const Chat = require("./models/chatSchema");
 const {
   removeInactiveChatParticipant,
   removeInactiveChatParticipantFromAll,

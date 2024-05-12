@@ -7,7 +7,7 @@ type PeerTypes = {
 const PeerUserWrapper = ({ children }: PeerTypes) => {
   return (
     <div className="border_b_stroke px-4 min-h-16 flex items-center ">
-      <div className="flex justify-between w-full items-center gap-4">
+      <div className="flex  w-full items-center ">
         {children}
       </div>
     </div>

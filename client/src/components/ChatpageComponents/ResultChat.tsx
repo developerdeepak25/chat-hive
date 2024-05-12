@@ -8,15 +8,17 @@ import { useAppSelector } from "@/store/hooks";
 const ResultChat: React.FC<{ chat: ChatTypes }> = ({ chat }) => {
   const { username, profilePicture: pic } = chat.chatPartner;
   const { createdAt, content } = chat?.latestMessage ?? {};
-  const {userId } = useAppSelector((state)=>{
+  const { userId } = useAppSelector((state) => {
     return state.Auth;
-  })
+  });
 
   //   put this logic in utility function
   //   const createdAt = "2024-04-16T15:47:26.915+00:00";
   // const createdAt = "2024-04-24T09:24:28.565Z";
   const createDateFormated = formatTimestampForDisplay(createdAt);
-  const unreadMessageCount = chat.unreadMessages.filter(unreadMessage => unreadMessage.senderId._id !== userId ).length
+  const unreadMessageCount = chat.unreadMessages.filter(
+    (unreadMessage) => unreadMessage.senderId._id !== userId
+  ).length;
   console.log(`unreadMessageCount`, unreadMessageCount);
 
   useEffect(() => {
@@ -27,8 +29,8 @@ const ResultChat: React.FC<{ chat: ChatTypes }> = ({ chat }) => {
     <>
       <div className="selected_bg_color_on_active w-full">
         <PeerUserWrapper>
-          <div className=" w-full flex">
-            <div className="flex gap-4 items-center w-full ">
+          <div className=" w-full flex min-w-0 gap-4 justify-between">
+            <div className="flex gap-4 items-center w-full min-w-0">
               <Profile src={pic} alt="resultuser" h={"40"} />
 
               <div className="  min-w-0">
@@ -39,20 +41,22 @@ const ResultChat: React.FC<{ chat: ChatTypes }> = ({ chat }) => {
                   </p>
                 )}
               </div>
-            <div className="flex   flex-col items-center justify-center gap-1 h-full shrink-0" >
+            </div>
+            <div className="flex   flex-col items-center justify-center gap-1 shrink-0">
               {createdAt && (
-                <p className=" text-xs text-gray-400   shrink-0">{createDateFormated}</p>
+                <p className=" text-xs text-gray-400   shrink-0">
+                  {createDateFormated}
+                </p>
               )}
               {!(unreadMessageCount <= 0 || !chat?.unreadMessages) && (
                 <div className=" h-5 aspect-square  bg_main rounded-full flex items-center justify-center">
-                  {unreadMessageCount && (
+                  {/* {unreadMessageCount && ( */}
                     <p className="text-xs text-gray-300 ">
                       {unreadMessageCount}
                     </p>
-                  )}
+                  {/* )} */}
                 </div>
               )}
-            </div>
             </div>
           </div>
         </PeerUserWrapper>

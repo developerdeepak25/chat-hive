@@ -107,10 +107,9 @@ const ChatPage = () => {
             ))}
         </UsersScrobleContainer>
       </SideColumnWrapper>
-        {/* <h1>i am empty but not shared</h1> */}
-        {/* <h2 className=" text-lg">Select a chat to start chatting</h2> */}
-        <Outlet />
-      
+      {/* <h1>i am empty but not shared</h1> */}
+      {/* <h2 className=" text-lg">Select a chat to start chatting</h2> */}
+      <Outlet />
     </>
   );
 };

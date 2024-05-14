@@ -14,6 +14,12 @@
 .bg_main {
   background-color: var(--main);
 }
+.color_main {
+  color: var(--main);
+}
+.color_status {
+  color: #9637e7;
+}
 
 .active .selected_bg_color_on_active {
   background-color: var(--selected);
@@ -39,6 +45,9 @@
 }
 .bg_primary{
 background-color: var(--bg-primary);
+}
+.color_primary {
+  color: var(--bg-primary);
 }
 .navbar_height{
   height: 80px;

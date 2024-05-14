@@ -17,7 +17,8 @@ import Messagefeed from "@/components/messageComp/Messagefeed";
 import { Loader2 } from "lucide-react";
 import { MessageType } from "@/types/type";
 import socket from "@/Socket";
-import { playSound } from "@/utils/functions";
+import { hasOtherElements, playSound } from "@/utils/functions";
+import { useTypingHandler } from "@/Hooks/useTypingHandler";
 
 const SingleChat = () => {
   const { id } = useParams();
@@ -27,9 +28,17 @@ const SingleChat = () => {
   const { selectedChat } = useAppSelector((state) => {
     return state.Chats;
   });
+  const { userId } = useAppSelector((state) => {
+    return state.Auth;
+  });
+  const [activeParticipants, setActiveParticipants] = useState<string[]>([]);
   const scrollBottomRef = useRef<HTMLDivElement>(null);
+  const [isTyping, setIsTyping] = useState(false); // partenr typing state
+  const [typing, setTyping] = useState(false); // current user typing state
 
   const { profilePicture, username } = selectedChat?.chatPartner || {};
+
+  const typingHandler = useTypingHandler();
 
   const getChatMessagesFromApi = async () => {
     const response = await apiAxios.get(
@@ -38,7 +47,7 @@ const SingleChat = () => {
     return response;
   };
 
-  const postChatMessage = async () => {
+  const sendMessage = async () => {
     if (typedMessage.length <= 0)
       return console.log("message can not be empty"); // TODO: show error message
 
@@ -54,8 +63,9 @@ const SingleChat = () => {
     queryKey: ["chatMessages" + selectedChat?._id],
     queryFn: getChatMessagesFromApi,
     enabled: !!selectedChat?._id, // Enable the query only when selectedChat._id is available
-    retry: false
+    retry: false,
   });
+
   const {
     mutate,
     isPending,
@@ -64,8 +74,8 @@ const SingleChat = () => {
     isSuccess: isMutationSuccess,
     // isError: isPostError,
   } = useMutation({
-    mutationFn: postChatMessage,
-    retry:false,
+    mutationFn: sendMessage,
+    retry: false,
     onSuccess: (data) => {
       setTypedMessage(""); // Clear the input field after successful send
       if (data && data.status === 200) {
@@ -76,6 +86,13 @@ const SingleChat = () => {
       }
     },
   });
+  const sendMessageOnEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      console.log("entered");
+      mutate();
+    }
+  };
 
   useEffect(() => {
     scrollBottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -100,6 +117,41 @@ const SingleChat = () => {
       socket.emit("leave chat", selectedChat?._id);
     };
   }, [selectedChat?._id]);
+  useEffect(() => {
+    const cb = (userIds: string[]) => {
+      console.log("new participant joined", userIds);
+
+      setActiveParticipants(userIds);
+    };
+    socket.on("participant joined", cb);
+
+    return () => {
+      socket.off("participant joined", cb);
+    };
+  }, []);
+  useEffect(() => {
+    const cb = (userId: string) => {
+      console.log(" participant left the chat", userId);
+
+      setActiveParticipants((prev) => {
+        return prev.filter((id) => id !== userId);
+      });
+    };
+    socket.on("participant left", cb);
+    socket.on("typing", () => setIsTyping(true));
+    socket.on("stop typing", () => setIsTyping(false));
+    return () => {
+      socket.off("participant left", cb);
+      socket.off("typing", () => setIsTyping(true));
+      socket.off("stop typing", () => setIsTyping(false));
+    };
+  }, []);
+  useEffect(() => {
+    console.log(activeParticipants);
+  }, [activeParticipants]);
+  useEffect(() => {
+    console.log(isTyping);
+  }, [isTyping]);
 
   useEffect(() => {
     dispatch(setSelectedChatById(id!));
@@ -109,7 +161,7 @@ const SingleChat = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    const liveChathandler = (message:MessageType) => {
+    const liveChathandler = (message: MessageType) => {
       console.log(`newMessage is emited for me`);
       if (!selectedChat) return;
       if (message.chatId._id !== selectedChat._id) return;
@@ -131,7 +183,16 @@ const SingleChat = () => {
         <div className=" h-full flex flex-col w-full bg_primary ">
           <div className=" py-5 border_b_stroke flex px-6 items-center gap-3 ">
             <Profile src={profilePicture} />
-            <h3 className=" text-lg">{username}</h3>
+            <div className="flex flex-col">
+              <h3 className=" text-lg">{username}</h3>
+              {/* checking weather other chat partner is active beside the current */}
+              {hasOtherElements(activeParticipants, userId!) &&
+                (isTyping ? (
+                  <p className="text-sm font-normal text-gray-400">typing...</p>
+                ) : (
+                  <p className="text-sm font-normal text-gray-400">online</p>
+                ))}
+            </div>
           </div>
           <div className="message-feed grow  bg_dark overflow-y-hidden flex flex-col max-h-full items-center justify-center">
             {/* <div className=" overflow-y-auto"> */}
@@ -158,7 +219,13 @@ const SingleChat = () => {
             <div className="flex gap-3">
               <MessageTextArea
                 className=" rounded-2xl resize-none py-3 outline-none px-5 selected_bg_color  font-medium grow block"
-                onChange={(e) => setTypedMessage(e.target.value)}
+                onChange={(e) => {
+                  setTypedMessage(e.target.value);
+                  if (selectedChat) {
+                    typingHandler(typing, setTyping, selectedChat._id);
+                  }
+                }}
+                onKeyDown={sendMessageOnEnter}
                 value={typedMessage}
               />
               <Button

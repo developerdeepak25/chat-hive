@@ -51,16 +51,30 @@ io.on("connection", (socket) => {
     // // chat id can be userid as well for allmost all litners i guess
     // console.log(`userId inside join chat event`, socket.userId);
     socket.join(chatId);
+    socket.chatId = chatId;
     console.log("joined room chat id: " + chatId);
-
     addActiveChatParticipant(socket, chatId);
+    // Get the list of socket IDs in the room
+    const sockets = await io.in(chatId).fetchSockets();
+
+    const userIds = sockets.map((socket) => {
+      return socket.userId;
+    });
+    console.log("userIds", userIds);
+
+    io.in(chatId).emit("participant joined", userIds);
+    console.log("participant joined chat id: " + chatId);
   });
   socket.on("leave chat", (chatId) => {
     removeInactiveChatParticipant(socket, chatId);
     socket.leave(chatId);
+    socket.to(chatId).emit("participant left", socket.userId);
     console.log("leaved room chat id: " + chatId);
   });
+
   socket.on("message", (message) => {
+    if (!message || !message.chatId)
+      return console.log("no message or missing chat id");
     const chat = message.chatId;
     // console.log(message);
     chat.participants.forEach((participant) => {
@@ -75,8 +89,11 @@ io.on("connection", (socket) => {
     socket.to(notification.recipientId).emit("newNotification", notification);
     console.log("notification sent to ", notification.recipientId);
   });
+socket.on("typing", (room) => socket.to(room).emit("typing"));
+socket.on("stop typing", (room) => socket.to(room).emit("stop typing")); 
   socket.on("disconnect", () => {
     console.log("User disconnected", socket.id, socket.userId);
+    socket.to(socket.chatId).emit("participant left", socket.userId);
     removeInactiveChatParticipantFromAll(socket);
   });
 });

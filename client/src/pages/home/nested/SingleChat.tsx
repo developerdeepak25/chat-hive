@@ -186,12 +186,13 @@ const SingleChat = () => {
             <div className="flex flex-col">
               <h3 className=" text-lg">{username}</h3>
               {/* checking weather other chat partner is active beside the current */}
-              {hasOtherElements(activeParticipants, userId!) &&
-                (isTyping ? (
+              {hasOtherElements(activeParticipants, userId!) ?
+                 (isTyping ? (
                   <p className="text-sm font-normal text-gray-400">typing...</p>
                 ) : (
                   <p className="text-sm font-normal text-gray-400">online</p>
-                ))}
+                )):
+                <p className="text-sm font-normal text-gray-400">offline</p>}
             </div>
           </div>
           <div className="message-feed grow  bg_dark overflow-y-hidden flex flex-col max-h-full items-center justify-center">

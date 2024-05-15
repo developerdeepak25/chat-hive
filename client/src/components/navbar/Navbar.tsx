@@ -4,7 +4,6 @@ import NavLinkIconWrapper from "../Shared/NavLinkIconWrapper/NavLinkIconWrapper"
 import ChatIcon from "@/assets/svgs/ChatsIcon";
 import NotificationIcon from "@/assets/svgs/NotificationIcon";
 import LogoutIcon from "@/assets/svgs/LogoutIcon";
-import ProfileIcon from "@/assets/svgs/ProfileIcon";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { authAxios } from "@/AxiosInstance/AxiosInstance";
@@ -13,15 +12,20 @@ import { resetChats } from "@/store/slices/chatsSlice";
 import { resetNotifications } from "@/store/slices/notificationSlice";
 import useMobileView from "@/Hooks/useMobileView";
 import { useEffect } from "react";
+import Profile from "../Shared/Profile/Profile";
 
 type NavbarViewsType = {
   unreadNotificationsId: string[];
   handleSignOut: () => Promise<void>;
+  userPic:string;
 };
 
 const Navbar = () => {
   const { unreadNotificationsId } = useAppSelector((state) => {
     return state.Notification;
+  });
+  const { userPic} = useAppSelector((state) => {
+    return state.Auth;
   });
   const isMobile = useMobileView();
   const dispatch = useAppDispatch();
@@ -55,18 +59,20 @@ const Navbar = () => {
     <MobileView
       unreadNotificationsId={unreadNotificationsId}
       handleSignOut={handleSignOut}
-    />
-  ) : (
-    <DesktopView
+      userPic={userPic!}
+      />
+    ) : (
+      <DesktopView
       unreadNotificationsId={unreadNotificationsId}
       handleSignOut={handleSignOut}
+      userPic={userPic!}
     />
   );
 };
 
 const MobileView = ({
   unreadNotificationsId,
-  handleSignOut,
+  handleSignOut,userPic
 }: NavbarViewsType) => {
   return (
     <div className=" w-full  h-20 border_t_stroke fixed bottom-0 left-0 right-0 z-30 bg_primary">
@@ -79,7 +85,7 @@ const MobileView = ({
         </div> */}
         <div className="Navbar_links flex  w-full  items-center gap-4 justify-evenly">
           <div className=" p-[5px]">
-            <ProfileIcon />
+            <Profile src={userPic} alt="resultuser" h={"30"} />
           </div>
 
           <NavLinkIconWrapper to={"/search"}>
@@ -111,6 +117,7 @@ const MobileView = ({
 const DesktopView = ({
   unreadNotificationsId,
   handleSignOut,
+  userPic,
 }: NavbarViewsType) => {
   return (
     <>
@@ -145,7 +152,7 @@ const DesktopView = ({
               <LogoutIcon />
             </div>
             <div className=" p-[5px]">
-              <ProfileIcon />
+              <Profile src={userPic} alt="resultuser" h={"30"} />
             </div>
           </div>
         </div>

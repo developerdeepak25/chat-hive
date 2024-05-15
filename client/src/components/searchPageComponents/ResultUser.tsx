@@ -58,7 +58,7 @@ const ResultUser = ({ user }: resultUserType) => {
       // if (res?.status === 400) {
       //   toast.error(res.data.message, errorToastOptions);
       // }
-    } catch (err:any) {
+    } catch (err: any) {
       console.log(err);
       if (!err.response) return;
       if (err.response.status === 400) {
@@ -87,31 +87,32 @@ const ResultUser = ({ user }: resultUserType) => {
     <>
       <PeerUserWrapper>
         {/* <div className="flex justify-between w-full items-center"> */}
-        <div className="flex  items-center gap-4 ">
-          <Profile src={pic} alt="resultuser" h={"40"} />
+        <div className=" w-full flex min-w-0 gap-4 justify-between">
+          <div className="flex  items-center gap-4 ">
+            <Profile src={pic} alt="resultuser" h={"40"} />
 
-          {/* <img src={user.pic} alt="resultuser" /> */}
-          <div>
-            <p>{username}</p>
-            <p className=" text-xs text-gray-400 ">{email}</p>
+            {/* <img src={user.pic} alt="resultuser" /> */}
+            <div>
+              <p>{username}</p>
+              <p className=" text-xs text-gray-400 ">{email}</p>
+            </div>
           </div>
+          <Button
+            variant="myMain"
+            size="sm"
+            // onClick={signInHandler}
+            // disabled={loading}
+            className=" rounded-full px-5 h-8"
+            onClick={() => sendFriendRequest(_id)}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <AddIcon />
+            )}{" "}
+          </Button>
         </div>
-        <Button
-          variant="myMain"
-          size="sm"
-          // onClick={signInHandler}
-          // disabled={loading}
-          className=" rounded-full px-5 h-8"
-          onClick={() => sendFriendRequest(_id)}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <AddIcon />
-          )}{" "}
-        </Button>
-        {/* </div> */}
       </PeerUserWrapper>
     </>
   );

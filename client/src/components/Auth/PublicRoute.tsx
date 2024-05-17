@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useAppSelector } from "@/store/hooks";
 import { ReactNode, Suspense } from "react";
-import { Loader2 } from "lucide-react";
+import FallBack from "../Fallback/FallBack";
 
 const PublicRoute = ({ children }: { children: ReactNode }) => {
   const { isAuthenticated } = useAppSelector((state) => {
@@ -10,11 +10,10 @@ const PublicRoute = ({ children }: { children: ReactNode }) => {
   console.log(isAuthenticated);
 
   return !isAuthenticated ? (
-    <Suspense
-      fallback={<Loader2 className="h-12 aspect-square animate-spin" />}
-    >
-      {children}
-    </Suspense>
+    <Suspense fallback={
+    <FallBack size={35} />
+  }
+    >{children}</Suspense>
   ) : (
     <>
       {console.log("herer")}

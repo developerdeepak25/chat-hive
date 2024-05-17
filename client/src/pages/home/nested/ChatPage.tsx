@@ -1,6 +1,7 @@
 import { apiAxios } from "@/AxiosInstance/AxiosInstance";
 import socket from "@/Socket";
 import ResultChat from "@/components/ChatpageComponents/ResultChat";
+import FallBack from "@/components/Fallback/FallBack";
 import SideColumnWrapper from "@/components/Shared/SideColumnWrapper/SideColumnWrapper";
 import UsersScrobleContainer from "@/components/Shared/UsersScrobleContainer/UsersScrobleContainer";
 import SearchBar from "@/components/input/SearchBar";
@@ -12,7 +13,6 @@ import {
 } from "@/store/slices/chatsSlice";
 import { ChatTypes, MessageType } from "@/types/type";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
@@ -90,7 +90,7 @@ const ChatPage = () => {
           <h2 className=" text-2xl font-medium px-4">Chats</h2>
         </div>
         <UsersScrobleContainer>
-          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+          {isPending && <FallBack size={25}/>}
           {isError && <p className="pt-5 text-center">No Chats present yet</p>}
           {isSuccess &&
             data?.status === 200 &&

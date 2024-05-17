@@ -3,9 +3,9 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { signin } from "@/store/slices/authSlice";
 import { addUnreadNotifications } from "@/store/slices/notificationSlice";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import FallBack from "../Fallback/FallBack";
 
 const PersistSignIn = () => {
   const { isAuthenticated } = useAppSelector((state) => {
@@ -34,11 +34,7 @@ const PersistSignIn = () => {
     }
   }, [data, dispatch, isSuccess]);
 
-  return isLoading ? (
-    <Loader2 className="h-12 aspect-square animate-spin" />
-  ) : (
-    <Outlet />
-  );
+  return isLoading ? <FallBack size={35} /> : <Outlet />;
 };
 
 export default PersistSignIn;

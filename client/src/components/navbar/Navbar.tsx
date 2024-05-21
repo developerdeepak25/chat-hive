@@ -6,7 +6,7 @@ import NotificationIcon from "@/assets/svgs/NotificationIcon";
 import LogoutIcon from "@/assets/svgs/LogoutIcon";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { authAxios } from "@/AxiosInstance/AxiosInstance";
+import { publicAxios } from "@/AxiosInstance/AxiosInstance";
 import { resetAuth } from "@/store/slices/authSlice";
 import { resetChats } from "@/store/slices/chatsSlice";
 import { resetNotifications } from "@/store/slices/notificationSlice";
@@ -33,7 +33,7 @@ const Navbar = () => {
   const handleSignOut = async () => {
     try {
       // Send a POST request to the server to sign out
-      await authAxios.post("/signout");
+      await publicAxios.post("/signout");
 
       //  reset all state data from store
       // did like this because not found any better way

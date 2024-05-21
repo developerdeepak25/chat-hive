@@ -8,9 +8,9 @@ import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { useFormValidation } from "@/Hooks/useValidation";
 import { toast } from "react-toastify";
-import { authAxios } from "@/AxiosInstance/AxiosInstance";
+import { publicAxios } from "@/AxiosInstance/AxiosInstance";
 import {  signin } from "@/store/slices/authSlice";
-import { ApiResponse, signInResponse } from "@/types/type";
+import { ApiResponse, SignInResponse } from "@/types/type";
 import { useHandleChange } from "@/Hooks/useHandleChange";
 import { errorToastOptions, successsToastOptions } from "@/utils/toastOption";
 import { useAppDispatch } from "@/store/hooks";
@@ -51,8 +51,8 @@ const SignIn = () => {
         return toast.error("fill all the fields", errorToastOptions);
       }
 
-      const { status, data }: ApiResponse<signInResponse> =
-        await authAxios.post("/signin", formData);
+      const { status, data }: ApiResponse<SignInResponse> =
+        await publicAxios.post("/signin", formData);
       // console.log(res);
 
       console.log(data, status);

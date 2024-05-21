@@ -1,53 +1,37 @@
-import { ApiResponse, userDataTypes } from "@/types/type";
+import { UserDataType } from "@/types/type";
 import PeerUserWrapper from "../Shared/PeerUser/PeerUserWrapper";
 import Profile from "../Shared/Profile/Profile";
 import { Button } from "../ui/button";
 import AddIcon from "@/assets/svgs/AddIcon";
 // import { useQuery } from "react-query";
-import { apiAxios } from "@/AxiosInstance/AxiosInstance";
+import { privateAxios } from "@/AxiosInstance/AxiosInstance";
 import { toast } from "react-toastify";
 import { errorToastOptions, successsToastOptions } from "@/utils/toastOption";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import socket from "@/Socket";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 // import { AxiosResponse } from "axios";
 
-type resultUserType = {
-  user: userDataTypes;
+type ResultUserType = {
+  user: UserDataType;
 };
 
-// const sendFriendRequest = async (id: string) => {
-//   return apiAxios.post(
-//       "/notification/request-friend",
-//       { receiverId: id }
-//     );
 
-// };
 
-const ResultUser = ({ user }: resultUserType) => {
+const ResultUser = ({ user }: ResultUserType) => {
   const { username, email, profilePicture: pic, _id } = user;
-  const [isLoading, setIsLoading] = useState(false);
-  // const { isLoading, error, refetch ,data} = useQuery(
-  //   "requestFriend"+_id,
-  //   () => sendFriendRequest(_id),
-  //   {
-  //     enabled: false, // Disable the query initially
-  //     retry: false, // Don't retry on error
-  //   }
-  // );
+ 
 
-  const sendFriendRequest = async (id: string) => {
-    try {
-      setIsLoading(true);
-      const res: ApiResponse<{
-        error: string;
-        message: string;
-        notification: string[];
-      }> = await apiAxios.post("/notification/request-friend", {
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (id: string) => {
+      const res = await privateAxios.post("/notification/request-friend", {
         receiverId: id,
       });
-      console.log(res);
-
+      return res;
+    },
+    onSuccess: (res) => {
       if (res?.status === 200 || res?.status === 201) {
         toast.success(res.data.message, successsToastOptions);
       }
@@ -55,33 +39,23 @@ const ResultUser = ({ user }: resultUserType) => {
         // in 201 rrreq is sent in 200 req already exists thats by emited in different check
         socket.emit("notification", res.data.notification);
       }
-      // if (res?.status === 400) {
-      //   toast.error(res.data.message, errorToastOptions);
-      // }
-    } catch (err: any) {
+    },
+    onError: (err: AxiosError<{ message: string }>) => {
       console.log(err);
+
       if (!err.response) return;
       if (err.response.status === 400) {
-        return toast.error(err.response.data.message, errorToastOptions);
+        if (err.response.data.message) {
+          return toast.error(err.response.data?.message, errorToastOptions);
+        }
       }
       toast.error("Something Went Wrong!!", errorToastOptions);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // useEffect(() =>{
-  //   console.log(data);
-
-  // },[data])
-
-  // const handleClick = () => {
-  //   refetch();
-  // };
+    },
+  });
 
   useEffect(() => {
-    console.log(isLoading);
-  }, [isLoading]);
+    console.log(isPending);
+  }, [isPending]);
 
   return (
     <>
@@ -103,10 +77,10 @@ const ResultUser = ({ user }: resultUserType) => {
             // onClick={signInHandler}
             // disabled={loading}
             className=" rounded-full px-5 h-8"
-            onClick={() => sendFriendRequest(_id)}
-            disabled={isLoading}
+            onClick={() => mutate(_id)}
+            disabled={isPending}
           >
-            {isLoading ? (
+            {isPending ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
               <AddIcon />

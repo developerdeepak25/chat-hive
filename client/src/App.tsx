@@ -7,7 +7,7 @@ import SignIn from "./pages/auth/signin/SignIn";
 import AuthPage from "./pages/auth/AuthPage";
 import Home from "./pages/home/Home";
 import NotificationPage from "./pages/home/nested/NotificationPage";
-import SearchPage from "./pages/home/nested/SearchPage";
+import SearchPage from "./pages/home/nested/SearchPage.tsx";
 import ChatPage from "./pages/home/nested/ChatPage";
 import SingleChat from "./pages/home/nested/SingleChat";
 import PrivateRoute from "./components/Auth/PrivateRoute";

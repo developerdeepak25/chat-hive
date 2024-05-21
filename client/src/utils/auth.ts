@@ -1,4 +1,4 @@
-import { apiAxios } from "@/AxiosInstance/AxiosInstance";
+import { privateAxios } from "@/AxiosInstance/AxiosInstance";
 import {  setAccessToken } from "@/store/slices/authSlice";
 import store from "@/store/store";
 import axios from "axios";
@@ -15,7 +15,7 @@ export const refreshAccessToken = async () => {
     store.dispatch(setAccessToken(newAccessToken));
 
     // Update the Authorization header for subsequent requests
-    apiAxios.defaults.headers.common[
+    privateAxios.defaults.headers.common[
       "Authorization"
     ] = `Bearer ${newAccessToken}`;
 

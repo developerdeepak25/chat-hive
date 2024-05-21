@@ -1,10 +1,10 @@
-import { ChatTypes, MessageType } from "@/types/type";
+import { ChatType, MessageType } from "@/types/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Define the initial state
 interface ChatsState {
-  chats: ChatTypes[];
-  selectedChat: ChatTypes | null;
+  chats: ChatType[];
+  selectedChat: ChatType | null;
 }
 
 const initialState: ChatsState = {
@@ -17,13 +17,13 @@ export const chatsSlice = createSlice({
   name: "Chats",
   initialState,
   reducers: {
-    // addChat: (state, action: PayloadAction<ChatTypes>) => {
+    // addChat: (state, action: PayloadAction<ChatType>) => {
     //   state.chats.push(action.payload);
     // },
-    // addChats: (state, action: PayloadAction<ChatTypes[]>) => {
+    // addChats: (state, action: PayloadAction<ChatType[]>) => {
     //   const newChats = action.payload;
 
-    //   newChats.forEach((newChat: ChatTypes) => {
+    //   newChats.forEach((newChat: ChatType) => {
     //     const existingChat = state.chats.find(
     //       (chats) => chats._id === newChat._id
     //     );
@@ -34,11 +34,11 @@ export const chatsSlice = createSlice({
     //   });
     // },
 
-    setChats: (state, action: PayloadAction<ChatTypes[]>) => {
+    setChats: (state, action: PayloadAction<ChatType[]>) => {
       const chats = action.payload;
       state.chats = chats;
     },
-    // setSelectedChat: (state, action: PayloadAction<ChatTypes>) => {
+    // setSelectedChat: (state, action: PayloadAction<ChatType>) => {
     //   state.selectedChat = action.payload;
     // },
     setSelectedChatById: (state, action: PayloadAction<string>) => {

@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import PeerUserWrapper from "../Shared/PeerUser/PeerUserWrapper";
 import Profile from "../Shared/Profile/Profile";
-import { ChatTypes } from "@/types/type";
+import { ChatType } from "@/types/type";
 import { formatTimestampForDisplay } from "@/utils/formatTimestampForDisplay";
 import { useAppSelector } from "@/store/hooks";
 
-const ResultChat: React.FC<{ chat: ChatTypes }> = ({ chat }) => {
+const ResultChat: React.FC<{ chat: ChatType }> = ({ chat }) => {
   const { username, profilePicture: pic } = chat.chatPartner;
   const { createdAt, content } = chat?.latestMessage ?? {};
   const { userId } = useAppSelector((state) => {

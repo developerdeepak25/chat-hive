@@ -20,7 +20,7 @@ export interface SVGProps {
   // path?: string;
 }
 
-export type signInResponse = {
+export type SignInResponse = {
   _id: string;
   name: string;
   email: string;
@@ -31,15 +31,15 @@ export type signInResponse = {
 };
 
 // result user types
-export type userDataTypes = {
+export type UserDataType = {
   username: string;
   profilePicture?: string;
   _id: string;
   email?: string;
 };
-export type ChatTypes = {
+export type ChatType = {
   _id: string;
-  chatPartner: userDataTypes;
+  chatPartner: UserDataType;
   // latestMessage: { createdAt: "string"; content : string};
   latestMessage: MessageType;
   unreadMessages: MessageType[];
@@ -55,8 +55,8 @@ export type NotificationType = {
 
 export type MessageType = {
   _id: string;
-  chatId:  ChatTypes ;
-  senderId: userDataTypes;
+  chatId: ChatType;
+  senderId: UserDataType;
   content: string;
   type: "text" | "media";
   createdAt: string;

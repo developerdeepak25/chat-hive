@@ -1,4 +1,4 @@
-import { authAxios } from "@/AxiosInstance/AxiosInstance";
+import {  publicAxios } from "@/AxiosInstance/AxiosInstance";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { signin } from "@/store/slices/authSlice";
 import { addUnreadNotifications } from "@/store/slices/notificationSlice";
@@ -12,7 +12,7 @@ const PersistSignIn = () => {
     return state.Auth;
   });
   const requestSignIn = async () => {
-    const response = await authAxios.get("/refresh");
+    const response = await publicAxios.get("/refresh");
     return response;
   };
   const dispatch = useAppDispatch();
@@ -39,7 +39,7 @@ const PersistSignIn = () => {
 
 export default PersistSignIn;
 
-// import { authAxios } from "@/AxiosInstance/AxiosInstance";
+// import { publicAxios } from "@/AxiosInstance/AxiosInstance";
 // import { useAppDispatch, useAppSelector } from "@/store/hooks";
 // import { signin } from "@/store/slices/authSlice";
 // import { useQuery } from "@tanstack/react-query";
@@ -51,7 +51,7 @@ export default PersistSignIn;
 //   const { isAuthenticated } = useAppSelector((state) => state.Auth);
 //   const [stateUpdated, setStateUpdated] = useState(false);
 //   const requestSignIn = async () => {
-//     const response = await authAxios.get("/refresh");
+//     const response = await publicAxios.get("/refresh");
 //     return response;
 //   };
 //   const dispatch = useAppDispatch();

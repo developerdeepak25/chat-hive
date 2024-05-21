@@ -11,6 +11,7 @@ export const hasOtherElements = (
   arr: (string | number)[],
   element: string | number
 ) => {
+  if (!arr || !element) return false
   // Filter the array to get all elements that are not equal to the provided element
   const otherElements = arr.filter((item) => item !== element);
 

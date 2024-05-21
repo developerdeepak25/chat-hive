@@ -27,14 +27,8 @@ const Messagefeed = ({ messages, bottomDivRef }: Props) => {
             />
           );
         })}
-        {/* <div className="flex">
-                <span className="incoming_msg_bg  rounded-xl p-3 max-w-[70%]">
-                hey there how are you whatsapp though we are not on Whatsapp
-                ha ha ddddfdf dfg dfg dfh dfhdgfg
-                </span>
-              </div> */}
       </div>
-              <div ref={bottomDivRef}></div>
+      <div ref={bottomDivRef}></div>
     </ScrollableFeed>
   );
 };

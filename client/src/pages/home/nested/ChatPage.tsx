@@ -1,4 +1,4 @@
-import { apiAxios } from "@/AxiosInstance/AxiosInstance";
+import { privateAxios } from "@/AxiosInstance/AxiosInstance";
 import socket from "@/Socket";
 import ResultChat from "@/components/ChatpageComponents/ResultChat";
 import FallBack from "@/components/Fallback/FallBack";
@@ -11,7 +11,7 @@ import {
   updateChatLatestMessage,
   updateChatUnreadedMessage,
 } from "@/store/slices/chatsSlice";
-import { ChatTypes, MessageType } from "@/types/type";
+import { ChatType, MessageType } from "@/types/type";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
@@ -24,7 +24,7 @@ const ChatPage = () => {
   });
 
   const getChatsFromApi = async () => {
-    const response = await apiAxios.get(`/chat/get-chats`);
+    const response = await privateAxios.get(`/chat/get-chats`);
     return response;
   };
   const { isPending, error, data, isSuccess, isError } = useQuery({
@@ -40,7 +40,7 @@ const ChatPage = () => {
     }
   }, [data, dispatch, isSuccess]);
 
-  const filteredChats = chats?.filter((chat: ChatTypes) =>
+  const filteredChats = chats?.filter((chat: ChatType) =>
     chat.chatPartner.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
   // console.log(filteredChats);
@@ -95,7 +95,7 @@ const ChatPage = () => {
           {isSuccess &&
             data?.status === 200 &&
             (filteredChats.length !== 0 ? (
-              filteredChats.map((chat: ChatTypes) => {
+              filteredChats.map((chat: ChatType) => {
                 return (
                   <NavLink key={chat._id} to={`/chats/${chat._id}`}>
                     <ResultChat chat={chat} />

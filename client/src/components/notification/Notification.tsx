@@ -4,7 +4,7 @@ import Profile from "../Shared/Profile/Profile";
 import { Button } from "../ui/button";
 import TickIcon from "@/assets/svgs/TickIcon";
 import CrossIcon from "@/assets/svgs/CrossIcon";
-import { apiAxios } from "@/AxiosInstance/AxiosInstance";
+import { privateAxios } from "@/AxiosInstance/AxiosInstance";
 import { Loader2 } from "lucide-react";
 import { useNotificationMutation } from "@/Hooks/useNotificationMutation";
 
@@ -31,13 +31,13 @@ const NotificationVarient = ({
 
   //
   const acceptRequest = async (id: string) => {
-    const response = await apiAxios.get(`/notification/accept-request/${id}`);
+    const response = await privateAxios.get(`/notification/accept-request/${id}`);
     return response;
   };
 
   //
   const rejectRequest = async (id: string) => {
-    const response = await apiAxios.get(`/notification/reject-request/${id}`);
+    const response = await privateAxios.get(`/notification/reject-request/${id}`);
     return response;
   };
 

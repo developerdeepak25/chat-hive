@@ -3,7 +3,7 @@ import store from "@/store/store";
 import { refreshAccessToken } from "@/utils/auth";
 import axios from "axios";
 
-const authAxios = axios.create({
+const publicAxios = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
   // validateStatus: function (status) {
@@ -11,7 +11,7 @@ const authAxios = axios.create({
   //   return status < 500;
   // },
 });
-const apiAxios = axios.create({
+const privateAxios = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
   // validateStatus: function (status) {
@@ -21,7 +21,7 @@ const apiAxios = axios.create({
 });
 
 // Request interceptor to set the Authorization header
-apiAxios.interceptors.request.use(
+privateAxios.interceptors.request.use(
   (config) => {
     console.log(`request`);
     const accessToken = store.getState().Auth.accessToken;
@@ -35,11 +35,12 @@ apiAxios.interceptors.request.use(
   }
 );
 
-apiAxios.interceptors.response.use(
+privateAxios.interceptors.response.use(
   (response) => {
-    console.log('testing response intercsptor');
-    
-    return response},
+    console.log("testing response intercsptor");
+
+    return response;
+  },
   async (error) => {
     const originalRequest = error.config;
 
@@ -65,4 +66,4 @@ apiAxios.interceptors.response.use(
   }
 );
 
-export { apiAxios, authAxios };
+export { publicAxios, privateAxios };

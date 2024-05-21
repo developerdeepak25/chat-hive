@@ -1,8 +1,7 @@
-import { authAxios } from "@/AxiosInstance/AxiosInstance";
+import { publicAxios } from "@/AxiosInstance/AxiosInstance";
 import { useHandleChange } from "@/Hooks/useHandleChange";
 import { useFormValidation } from "@/Hooks/useValidation";
 import FormWrapper from "@/components/formComponents/FormWrapper";
-// import GoogleLogoutComp from "@/components/google/GoogleLogout";
 import GoogleSignIn from "@/components/google/GoogleSignIn";
 import InputLabeled from "@/components/input/InputLabeled";
 import Heading from "@/components/text/Heading";
@@ -30,7 +29,7 @@ const SignUp = () => {
     }
     try {
       setLoading(true);
-      const { status } = await authAxios.post("/signup", formData);
+      const { status } = await publicAxios.post("/signup", formData);
 
       if (status === 200) {
         toast.success("Signed up successfully", successsToastOptions);

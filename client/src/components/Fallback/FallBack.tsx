@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { Loader2, LucideProps } from "lucide-react";
 
 type FallBackType = LucideProps & {
@@ -7,7 +8,7 @@ type FallBackType = LucideProps & {
 const FallBack = ({ size = 30, className, ...props }: FallBackType) => {
   return (
     <div
-      className={`w-full flex justify-center items-center pt-5 ${className}`}
+      className={cn(`w-full flex justify-center items-center pt-5 `, className)}
     >
       <Loader2
         size={size}

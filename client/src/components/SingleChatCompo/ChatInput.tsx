@@ -43,6 +43,7 @@ ChatInputProps) => {
   });
 
   useEffect(() => {
+    // did not used after sendMessage success beacuse ui is not rendered immediately, so below code scrolls to one msg less to the bottom thats why used in useEffect
     scrollBottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [isSuccess, scrollBottomRef]);
 

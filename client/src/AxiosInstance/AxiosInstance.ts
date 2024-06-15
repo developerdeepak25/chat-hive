@@ -47,7 +47,7 @@ privateAxios.interceptors.response.use(
     console.log("on the way to refresh access toke but out");
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      console.log("on the way to refresh access toke");
+      // console.log("on the way to refresh access toke");
       try {
         const newAccessToken = await refreshAccessToken();
 

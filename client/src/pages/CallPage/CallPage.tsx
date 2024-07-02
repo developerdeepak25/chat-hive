@@ -14,7 +14,7 @@ const CallPage = () => {
   });
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [remoteStream, setRemoteStream] = useState<MediaStream | null>();
+  const [remoteStream, setRemoteStream] = useState<MediaStream | undefined>();
   const peer = useRef<Peer | null>(null);
 
   function onPermissionDeniedHandler() {
@@ -75,7 +75,7 @@ const CallPage = () => {
       ) : null}
       {/* {log && <h1>{log}</h1>} */}
       {/* <button onClick={() => getStream()}>Start Camera</button> */}
-      <CameraViews localStream={stream} remoteStream={stream} />
+      <CameraViews localStream={stream} remoteStream={remoteStream} />
     </div>
   );
 };

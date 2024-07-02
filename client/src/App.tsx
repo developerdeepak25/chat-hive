@@ -16,6 +16,8 @@ import PersistSignIn from "./components/Auth/PersistSignIn";
 import FillerComponent from "./components/Shared/FillerComponent/FillerComponent";
 import { ToastContainer } from "react-toastify";
 import useMobileView from "./Hooks/useMobileView";
+import { Toaster } from "./components/ui/sonner.tsx";
+import CallPage from "./pages/CallPage/CallPage.tsx";
 
 function App() {
   // useEffect(() => {
@@ -62,13 +64,18 @@ function App() {
             <Route path="search" element={<SearchPage />} />
             <Route path="notification" element={<NotificationPage />} />
           </Route>
+          <Route path="/call/:callId" element={<CallPage/>}></Route>
         </Route>
       </Routes>
+
+      {/* one toast is to be removed */}
       <ToastContainer
         position={ismobile ? "top-center" : "bottom-right"}
         pauseOnFocusLoss={false}
         pauseOnHover={false}
       />
+      {/* giving any class to the Toaster component turns theme to dark(what i want) probably a bug or idk what is it */}
+      <Toaster theme='dark' className="dark" richColors position={ismobile ? "top-center" : "bottom-right"} />
     </>
   );
 }

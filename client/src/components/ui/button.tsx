@@ -20,15 +20,17 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         link: "text-slate-900 underline-offset-4 hover:underline dark:text-slate-50",
-        myMain: "font-normal text-white hover:opacity-80 button-override-bg",
-        mySecondary: "font-normal text-white hover:opacity-80 bg-zinc-600	",
+        myMain:
+          "font-normal text-white hover:opacity-80 rounded-full button-override-bg",
+        mySecondary:
+          "font-normal text-white hover:opacity-80 rounded-full bg-zinc-600	",
       },
       size: {
         default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
+        sm: "h-9  px-3",
+        lg: "h-11  px-8",
         icon: "h-10 w-10",
-        smAuth: "h-9 rounded-md px-3 w-full",
+        smAuth: "h-9  px-3 w-full",
       },
     },
     defaultVariants: {

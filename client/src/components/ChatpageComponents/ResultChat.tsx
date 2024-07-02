@@ -31,7 +31,7 @@ const ResultChat: React.FC<{ chat: ChatType }> = ({ chat }) => {
         <PeerUserWrapper>
           <div className=" w-full flex min-w-0 gap-4 justify-between">
             <div className="flex gap-4 items-center w-full min-w-0">
-              <Profile src={pic} alt="resultuser" h={"40"} />
+              <Profile src={pic} alt="resultuser" height={"40"} />
 
               <div className="  min-w-0">
                 <p>{username}</p>

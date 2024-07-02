@@ -2,15 +2,15 @@ import ProfileIcon from "@/assets/svgs/ProfileIcon";
 import React from "react";
 
 type ProfileProps = React.ImgHTMLAttributes<HTMLImageElement> & {
-  h?: string ;
+  height?: string ;
 };
 
-const Profile: React.FC<ProfileProps> = ({ h='40', className,src, ...props }) => {
+const Profile: React.FC<ProfileProps> = ({ height='40', className,src, ...props }) => {
   return (
     <>
       {src ? (
         <div
-          style={{ height: h+'px' }}
+          style={{ height: height+'px' }}
           className={`aspect-square rounded-full overflow-hidden   shrink-0`}
         >
           <img
@@ -20,7 +20,7 @@ const Profile: React.FC<ProfileProps> = ({ h='40', className,src, ...props }) =>
           />
         </div>
       ) : (
-        <ProfileIcon fill="#3a3a3a" height={h}  />
+        <ProfileIcon fill="#3a3a3a" height={height}  />
       )}
     </>
   ); 

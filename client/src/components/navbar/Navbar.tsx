@@ -85,7 +85,7 @@ const MobileView = ({
         </div> */}
         <div className="Navbar_links flex  w-full  items-center gap-4 justify-evenly">
           <div className=" p-[5px]">
-            <Profile src={userPic} alt="resultuser" h={"30"} />
+            <Profile src={userPic} alt="resultuser" height={"30"} />
           </div>
 
           <NavLinkIconWrapper to={"/search"}>
@@ -152,7 +152,7 @@ const DesktopView = ({
               <LogoutIcon />
             </div>
             <div className=" p-[5px]">
-              <Profile src={userPic} alt="resultuser" h={"30"} />
+              <Profile src={userPic} alt="resultuser" height={"30"} />
             </div>
           </div>
         </div>

@@ -104,7 +104,7 @@ const NotificationVarient = ({
     <>
       {/* <div className="flex  gap-4"> */}
       <div className="flex  items-center gap-4 ">
-        <Profile src={sender.profilePicture} alt="resultuser" h={"40"} />
+        <Profile src={sender.profilePicture} alt="resultuser" height={"40"} />
 
         {/* <img src={user.pic} alt="resultuser" /> */}
         <div className="py-2">
@@ -119,7 +119,7 @@ const NotificationVarient = ({
           <Button
             variant="myMain"
             size="sm"
-            className=" rounded-full px-5 h-8"
+            className="  px-5 h-8"
             onClick={() => acceptMutate(sender._id)}
             disabled={isAcceptPending}
           >
@@ -132,7 +132,7 @@ const NotificationVarient = ({
           <Button
             variant={"mySecondary"}
             size="sm"
-            className=" rounded-full px-5 h-8"
+            className="  px-5 h-8"
             onClick={() => rejectMutate(sender._id)}
             disabled={isRejectPending}
           >

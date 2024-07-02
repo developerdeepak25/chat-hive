@@ -63,7 +63,7 @@ const ResultUser = ({ user }: ResultUserType) => {
         {/* <div className="flex justify-between w-full items-center"> */}
         <div className=" w-full flex min-w-0 gap-4 justify-between items-center">
           <div className="flex  items-center gap-4 ">
-            <Profile src={pic} alt="resultuser" h={"40"} />
+            <Profile src={pic} alt="resultuser" height={"40"} />
 
             {/* <img src={user.pic} alt="resultuser" /> */}
             <div>
@@ -76,7 +76,7 @@ const ResultUser = ({ user }: ResultUserType) => {
             size="sm"
             // onClick={signInHandler}
             // disabled={loading}
-            className=" rounded-full px-5 h-8"
+            className="px-5 h-8"
             onClick={() => mutate(_id)}
             disabled={isPending}
           >

@@ -11,9 +11,6 @@
   border-top: 1px solid var(--stroke);
 }
 
-.bg_main {
-  background-color: var(--main);
-}
 .color_main {
   color: var(--main);
 }
@@ -21,6 +18,12 @@
   color: #9637e7;
 }
 
+.color_primary {
+  color: var(--bg-primary);
+}
+.text_color_icon {
+  color: var(--icon);
+}
 .active .selected_bg_color_on_active {
   background-color: var(--selected);
 }
@@ -29,14 +32,14 @@
   background-color: var(--selected);
 }
 
+
+.bg_main {
+  background-color: var(--main);
+}
+
 .bg_dark {
   background-color: #0d0d0d;
 }
-
-.text_color_icon {
-  color: var(--icon);
-}
-
 .incoming_msg_bg{
     background-color: var(--incoming-msg-bg);
 }
@@ -46,9 +49,10 @@
 .bg_primary{
 background-color: var(--bg-primary);
 }
-.color_primary {
-  color: var(--bg-primary);
-}
+
+
+
+
 .navbar_height{
   height: 80px;
 }

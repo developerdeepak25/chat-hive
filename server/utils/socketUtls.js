@@ -82,8 +82,21 @@ const removeInactiveChatParticipantFromAll = async (socket) => {
   }
 };
 
+const getSocketOfRoom = async (roomId,io) => {
+  const sockets = await io.in(roomId).fetchSockets();
+  return sockets;
+};
+const getUserIdsFromSockets = (sockets) => {
+  const userIds = sockets.map((socket) => {
+    return socket.userId;
+  });
+  return userIds;
+};
+
 module.exports = {
   addActiveChatParticipant,
   removeInactiveChatParticipant,
   removeInactiveChatParticipantFromAll,
+  getSocketOfRoom,
+  getUserIdsFromSockets,
 };

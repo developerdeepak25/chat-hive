@@ -88,6 +88,7 @@ const SingleChat = () => {
             activeParticipants={activeParticipants}
             userId={userId}
             isTyping={isTyping}
+            chatPartnerId={selectedChat?.chatPartner._id}
           />
           <ChatFeedBox
             scrollBottomRef={scrollBottomRef}

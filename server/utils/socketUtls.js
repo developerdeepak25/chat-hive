@@ -82,7 +82,7 @@ const removeInactiveChatParticipantFromAll = async (socket) => {
   }
 };
 
-const getSocketOfRoom = async (roomId,io) => {
+const getSocketOfRoom = async (roomId, io) => {
   const sockets = await io.in(roomId).fetchSockets();
   return sockets;
 };
@@ -93,10 +93,19 @@ const getUserIdsFromSockets = (sockets) => {
   return userIds;
 };
 
+const initiateCall = (socket, callRoomId) => {
+  socket.callRoomId = callRoomId;
+  socket.join(callRoomId);
+
+  console.log("call id form socket instance", socket.callRoomId);
+  console.log("callRoomID", callRoomId);
+};
+
 module.exports = {
   addActiveChatParticipant,
   removeInactiveChatParticipant,
   removeInactiveChatParticipantFromAll,
   getSocketOfRoom,
   getUserIdsFromSockets,
+  initiateCall,
 };

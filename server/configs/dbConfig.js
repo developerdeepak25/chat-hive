@@ -6,8 +6,8 @@ const URI = process.env.MONGODB_URI;
 
 const connectDB = async () => {
   try {
-    // await mongoose.connect(URI);
-    await mongoose.connect("mongodb://localhost:27017/chatApp_hive");
+    await mongoose.connect(URI);
+    // await mongoose.connect("mongodb://localhost:27017/chatApp_hive");
 
     console.log("MongoDB Connected");
   } catch (error) {

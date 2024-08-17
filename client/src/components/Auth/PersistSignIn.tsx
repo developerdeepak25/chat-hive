@@ -12,6 +12,7 @@ const PersistSignIn = () => {
   const { isAuthenticated } = useAppSelector((state) => {
     return state.Auth;
   });
+  
   const requestSignIn = async () => {
     const response = await publicAxios.get("/refresh");
     return response;

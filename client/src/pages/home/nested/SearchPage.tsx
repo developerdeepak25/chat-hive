@@ -41,7 +41,7 @@ const SearchPage = () => {
               onChange={(e) => {
                 debouncedQuery(e.target.value);
               }}
-              placeholder="Discover peoples"
+              placeholder="search name or email"
             />
           </div>
           <h2 className=" text-2xl font-medium px-4">Results</h2>

@@ -18,7 +18,7 @@ const InputLabeled = ({ label, id, type, onChange }: inputLabelTypes) => {
         type={type}
         name={id}
         onChange={onChange}
-        className="input-overrides"
+        className="input-overrides !bg-transparent"
       />
     </div>
   );

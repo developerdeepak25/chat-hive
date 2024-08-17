@@ -21,19 +21,19 @@ const privateAxios = axios.create({
 });
 
 // Request interceptor to set the Authorization header
-privateAxios.interceptors.request.use(
-  (config) => {
-    console.log(`request`);
-    const accessToken = store.getState().Auth.accessToken;
-    if (accessToken) {
-      config.headers["Authorization"] = `Bearer ${accessToken}`;
+  privateAxios.interceptors.request.use(
+    (config) => {
+      console.log(`request`);
+      const accessToken = store.getState().Auth.accessToken;
+      if (accessToken) {
+        config.headers["Authorization"] = `Bearer ${accessToken}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
     }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+  );
 
 privateAxios.interceptors.response.use(
   (response) => {

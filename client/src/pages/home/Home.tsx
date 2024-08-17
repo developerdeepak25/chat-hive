@@ -1,19 +1,20 @@
-import { useCallToast } from "@/Hooks/CallPage.hooks";
 import socket from "@/Socket";
 import Navbar from "@/components/navbar/Navbar";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { startCall } from "@/store/slices/callSlice";
 import { addUnreadNotifications } from "@/store/slices/notificationSlice";
 import { playSound } from "@/utils/functions";
-import { useCallback, useEffect } from "react";
+import {  useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
 const Home = () => {
   const { userId } = useAppSelector((state) => {
     return state.Auth;
   });
+  // const { isInCall } = useAppSelector((state) => {
+  //   return state.Call;
+  // });
   const dispatch = useAppDispatch();
-  const { showToast } = useCallToast();
+  // const { showToast } = useCallToast();
 
   useEffect(() => {
     socket.emit("setUp", userId);
@@ -25,42 +26,47 @@ const Home = () => {
   }, [userId]);
 
   useEffect(() => {
-    const cb = (notif: string) => {
+    const handleNewNotification = (notif: string) => {
       const array = [notif];
       dispatch(addUnreadNotifications(array));
       playSound();
     };
-    socket.on("newNotification", cb);
+    socket.on("newNotification", handleNewNotification);
     socket.on("newMessage", () => {
       console.log("playingsound");
 
       playSound();
     });
     return () => {
-      socket.off("newNotification", cb);
+      socket.off("newNotification", handleNewNotification);
       socket.off("newMessage", () => playSound());
     };
   }, [dispatch]);
 
-  const handleIncomingCall = useCallback(
-   (callId: string, senderId: string) => {
-      playSound({ loop: true, type: "call" });
-      dispatch(startCall())
-      console.log("callroom id:", callId, " sender ID", senderId);
-      showToast("john john", callId, senderId);
-    },
-    [dispatch, showToast]
-  );
-  useEffect(() => {
-    socket.on("incoming-call", handleIncomingCall);
-    return () => {
-      socket.off("incoming-call", handleIncomingCall);
-    };
-  }, [handleIncomingCall]);
+  // const handleIncomingCall = useCallback(
+  //  (callId: string, sender:SenderType ) => {
+  //   // if (isInCall) return  toast('person is busy')
+  //   if (isInCall) return  socket.emit('callee-busy',sender.userId)
+
+  //     playSound({ loop: true, type: "call" });
+  //     dispatch(setStartCall());
+  //     console.log("callroom id:", callId, " sender ID", sender.userId);
+  //     console.log(sender.username, sender, "called you");
+      
+  //     showToast(sender.username, callId, sender.userId);
+  //   },
+  //   [dispatch, isInCall, showToast]
+  // );
+  // useEffect(() => {
+  //   socket.on("incoming-call", handleIncomingCall);
+  //   return () => {
+  //     socket.off("incoming-call", handleIncomingCall);
+  //   };
+  // }, [handleIncomingCall]);
 
   return (
     <>
-      <div className="w-full  overflow-hidden flex relative h-full ">
+      <div className="w-full  overflow-hidden flex relative h-full bg_primary">
         <Navbar />
         <Outlet />
       </div>

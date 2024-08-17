@@ -12,6 +12,9 @@
   box-sizing: border-box;
   font-family: "Quicksand", sans-serif;
   font-optical-sizing: auto;
+    /* background-color: #161219; */
+    color: #fff;
+
 }
 
 :root {

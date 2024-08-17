@@ -24,9 +24,9 @@ const SingleChat = () => {
     return state.Chats;
   });
   const dispatch = useAppDispatch();
-  const { userId } = useAppSelector((state) => {
-    return state.Auth;
-  });
+  // const { userId } = useAppSelector((state) => {
+  //   return state.Auth;
+  // });
   const { profilePicture, username } = selectedChat?.chatPartner || {};
 
   useEffect(() => {
@@ -86,7 +86,7 @@ const SingleChat = () => {
             profilePicture={profilePicture}
             username={username}
             activeParticipants={activeParticipants}
-            userId={userId}
+            // userId={userId}
             isTyping={isTyping}
             chatPartnerId={selectedChat?.chatPartner._id}
           />

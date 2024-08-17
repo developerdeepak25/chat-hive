@@ -1,9 +1,22 @@
-import {  createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Define the initial state
-const initialState: {isInCall: boolean} = {
- isInCall: false,
 
+type callStage =
+  | "ringing"
+  | "waiting"
+  | "connecting"
+  | "connected"
+  // | "ended"
+  | null;
+const initialState: {
+  isInCall: boolean;
+  callStage: callStage;
+  callId: string | null;
+} = {
+  isInCall: false,
+  callStage: null,
+  callId:null
 };
 
 // Create the slice
@@ -11,17 +24,23 @@ export const callSlice = createSlice({
   name: "Call",
   initialState,
   reducers: {
-    startCall: (state) => {
+    setStartCall: (state,action:PayloadAction<string>) => {
       state.isInCall = true;
+      state.callId = action.payload;
     },
-    endCall: (state) => {
+    setEndCall: (state) => {
       state.isInCall = false;
+      state.callStage = null;
+      // state.callId = null;
+    },
+    setCallStage: (state, action: PayloadAction<callStage>) => {
+      state.callStage = action.payload;
     },
   },
 });
 
 // Export the reducer functions
-export const { startCall, endCall } = callSlice.actions;
+export const { setStartCall, setEndCall, setCallStage } = callSlice.actions;
 
 // Export the reducer
 export default callSlice.reducer;

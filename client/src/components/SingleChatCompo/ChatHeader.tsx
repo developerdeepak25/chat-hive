@@ -5,14 +5,13 @@ import { v4 as uuidv4 } from "uuid";
 import socket from "@/Socket";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { toast } from "sonner";
-import { startCall } from "@/store/slices/callSlice";
+import { setCallStage, setStartCall } from "@/store/slices/callSlice";
 
 type SingleChatHeaderProps = {
   profilePicture: string | undefined;
   username: string | undefined;
   activeParticipants: string[];
-  userId: string | undefined;
+  // userId: string | undefined;
   isTyping: boolean;
   chatPartnerId: string | undefined;
 };
@@ -21,7 +20,7 @@ const SingleChatHeader = ({
   profilePicture,
   username,
   activeParticipants,
-  userId,
+  // userId,
   isTyping,
   chatPartnerId,
 }: SingleChatHeaderProps) => {
@@ -29,18 +28,19 @@ const SingleChatHeader = ({
   const { isInCall } = useAppSelector((state) => {
     return state.Call;
   });
+  const { name,userId } = useAppSelector((state) => {
+    return state.Auth;
+  });
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleVideoCall = () => {
-    if (isInCall) return toast("User is busy", {
-      dismissible: true,
-      position: "bottom-right",
-    });
+    if (isInCall) return 
     const callId = uuidv4();
+    dispatch(setStartCall(callId));
+    dispatch(setCallStage('waiting'))
+    socket.emit("outgoing-call", callId, chatPartnerId,{username:name,userId});
     navigate(`/call/${callId}`);
-    socket.emit("outgoing-call", callId, chatPartnerId);
-    dispatch(startCall());
     // toast for on call/videocall
     // const id = toast(<CallToast callerName="john john" onAccept={acceptCall}  onReject={rejectCall}/>, {
     //   closeButton: false,

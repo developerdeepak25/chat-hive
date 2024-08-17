@@ -17,6 +17,7 @@ const {
   addActiveChatParticipant,
   getSocketOfRoom,
   getUserIdsFromSockets,
+  initiateCall,
 } = require("./utils/socketUtls");
 const io = new Server(server, {
   cors: {
@@ -43,7 +44,6 @@ server.on("listening", () => {
 //
 
 io.on("connection", (socket) => {
-
   console.log("User connected", socket.id);
 
   socket.on("setUp", (id) => {
@@ -60,8 +60,8 @@ io.on("connection", (socket) => {
     console.log("joined room chat id: " + chatId);
     addActiveChatParticipant(socket, chatId);
     // Get the list of socket IDs in the room
-   const sockets = await getSocketOfRoom(chatId,io)
-   const userIds = getUserIdsFromSockets(sockets);
+    const sockets = await getSocketOfRoom(chatId, io);
+    const userIds = getUserIdsFromSockets(sockets);
     // const sockets = await io.in(chatId).fetchSockets();
     // const userIds = sockets.map((socket) => {
     //   return socket.userId;
@@ -102,23 +102,46 @@ io.on("connection", (socket) => {
   socket.on("stop typing", (room) => socket.to(room).emit("stop typing"));
 
   // call events
+  socket.on("outgoing-call", (callRoomId, recipientId, sender) => {
+    // sender is a object constaining name and id
+    socket.callRoomId = callRoomId;
+    initiateCall(socket, callRoomId)
+    socket.to(recipientId).emit("incoming-call", callRoomId, sender);
+  });
 
-  socket.on("outgoing-call", (roomId, recipientId)=>{
-    socket.to(recipientId).emit("incoming-call", roomId, socket.userId)
+  socket.on("callee-busy", (callerId) => {
+    socket.to(callerId).emit("callee-busy");
+  });
+  
+  socket.on("initiate-call", (callRoomId)=> initiateCall(socket, callRoomId)) // regrating not using TS😫
+  //   (callRoomId) => {
+  //   socket.callRoomId = callRoomId;
+  //   socket.join(callRoomId);
+
+  //   console.log("call id form socket instance", socket.callRoomId);
+  //   console.log("callRoomID", callRoomId);
+  //   // socket.to(callRoomId).emit("user-connected", peerId);
+  // });
+  
+  socket.on("join-call", async (callRoomId, peerId) =>{
+    socket.to(callRoomId).emit("user-connected", peerId);
+
   })
 
-  socket.on("join-call", async (roomId,peerId) => {
-    socket.join(roomId);
-    const sockets = await  getSocketOfRoom(roomId,io)
-   const userIds = getUserIdsFromSockets(sockets);
-   console.log('roomID', roomId);
-    console.log("joined call romm by", userIds);
-    socket.to(roomId).emit("user-connected",peerId);
+  socket.on("end-call", (callRoomId) => {
+    socket.to(callRoomId).emit("end-call");
+    socket.leave(callRoomId);
+    console.log("call end on end-call", socket.callRoomId);
   });
 
   socket.on("disconnect", () => {
     console.log("User disconnected", socket.id, socket.userId);
     socket.to(socket.chatId).emit("participant left", socket.userId);
     removeInactiveChatParticipantFromAll(socket);
+
+    // call events to fire on disconnect .
+    console.log("call end on disconnect", socket.callRoomId);
+    socket.to(socket.callRoomId).emit("end-call");
+    socket.leave(socket.callRoomId);
   });
 });

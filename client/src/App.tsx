@@ -65,7 +65,12 @@ function AppLayout() {
 
 
   const handleEndCallOnRinging = useCallback(() => {
-    toast('Call Ended')
+    if (!isInCall) return
+      toast("Call Ended", {
+        dismissible: true,
+        closeButton: false,
+        // duration:3,
+      });
     if (callStage !== "ringing") return;
     console.log("call hung up before pickup"); //
     dispatch(setEndCall());
@@ -91,10 +96,13 @@ function AppLayout() {
       />
       <Toaster
         theme="dark"
-        className="dark"
+        className="dark "
         richColors
         position={ismobile ? "top-center" : "bottom-right"}
         closeButton={true}
+        // duration={3}
+                  // duration={Infinity}
+
       />
     </>
   );
